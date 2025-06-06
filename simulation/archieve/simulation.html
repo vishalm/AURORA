@@ -1,0 +1,1355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AURORA - Cognitive Procurement Command Center</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a1628 0%, #1e3a5f 100%);
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .command-center {
+            display: grid;
+            grid-template-areas: 
+                "header header header"
+                "nav main sidebar"
+                "nav main sidebar";
+            grid-template-columns: 250px 1fr 300px;
+            grid-template-rows: 80px 1fr;
+            height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            grid-area: header;
+            background: linear-gradient(90deg, #1e3a5f 0%, #2d5aa0 100%);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            border-bottom: 2px solid #3b82f6;
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .aurora-logo {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, #60a5fa, #3b82f6, #1d4ed8);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .header-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #60a5fa, #93c5fd);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .system-status {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(34, 197, 94, 0.2);
+            border: 1px solid #22c55e;
+            border-radius: 25px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #22c55e;
+            border-radius: 50%;
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0.3; }
+        }
+
+        /* Navigation */
+        .nav-panel {
+            grid-area: nav;
+            background: linear-gradient(180deg, #1e3a5f 0%, #0f172a 100%);
+            border-right: 1px solid #334155;
+            padding: 1rem;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: linear-gradient(90deg, rgba(59, 130, 246, 0.2), rgba(96, 165, 250, 0.1));
+            border-color: #3b82f6;
+            transform: translateX(5px);
+        }
+
+        .nav-icon {
+            width: 20px;
+            text-align: center;
+            color: #60a5fa;
+        }
+
+        /* Main Dashboard */
+        .main-dashboard {
+            grid-area: main;
+            padding: 2rem;
+            overflow-y: auto;
+            background: rgba(15, 23, 42, 0.5);
+        }
+
+        /* KPI Grid */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .kpi-card {
+            background: linear-gradient(135deg, rgba(30, 58, 95, 0.8), rgba(15, 23, 42, 0.9));
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.2);
+            border-color: #3b82f6;
+        }
+
+        .kpi-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #3b82f6, #60a5fa, #93c5fd);
+        }
+
+        .kpi-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .kpi-title {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .kpi-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #60a5fa, #93c5fd);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .kpi-change {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .change-positive {
+            color: #22c55e;
+        }
+
+        .change-negative {
+            color: #ef4444;
+        }
+
+        /* Agent Activity Center */
+        .agent-center {
+            background: linear-gradient(135deg, rgba(30, 58, 95, 0.8), rgba(15, 23, 42, 0.9));
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .agent-center-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .agent-center-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #f1f5f9;
+        }
+
+        .agents-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1.5rem;
+        }
+
+        .agent-card {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(30, 58, 95, 0.3));
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .agent-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(59, 130, 246, 0.3);
+            border-color: #3b82f6;
+        }
+
+        .agent-card.active {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(96, 165, 250, 0.2));
+            border-color: #60a5fa;
+            animation: agentWorking 2s infinite;
+        }
+
+        @keyframes agentWorking {
+            0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
+            50% { box-shadow: 0 0 30px rgba(59, 130, 246, 0.6); }
+        }
+
+        .agent-avatar {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #3b82f6, #60a5fa);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .agent-name {
+            font-weight: 600;
+            color: #f1f5f9;
+            margin-bottom: 0.5rem;
+        }
+
+        .agent-status {
+            font-size: 0.8rem;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            display: inline-block;
+        }
+
+        .status-active {
+            background: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+            border: 1px solid #22c55e;
+        }
+
+        .status-thinking {
+            background: rgba(251, 191, 36, 0.2);
+            color: #fbbf24;
+            border: 1px solid #fbbf24;
+        }
+
+        .status-idle {
+            background: rgba(156, 163, 175, 0.2);
+            color: #9ca3af;
+            border: 1px solid #9ca3af;
+        }
+
+        .agent-metrics {
+            margin-top: 1rem;
+            font-size: 0.8rem;
+            color: #94a3b8;
+        }
+
+        /* Workflow Simulation */
+        .workflow-section {
+            background: linear-gradient(135deg, rgba(30, 58, 95, 0.8), rgba(15, 23, 42, 0.9));
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .workflow-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .workflow-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #f1f5f9;
+        }
+
+        .simulation-controls {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .sim-button {
+            padding: 0.8rem 1.5rem;
+            border: 1px solid #3b82f6;
+            background: linear-gradient(45deg, rgba(59, 130, 246, 0.1), rgba(96, 165, 250, 0.1));
+            color: #60a5fa;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .sim-button:hover {
+            background: linear-gradient(45deg, rgba(59, 130, 246, 0.3), rgba(96, 165, 250, 0.2));
+            transform: translateY(-2px);
+        }
+
+        .sim-button.primary {
+            background: linear-gradient(45deg, #3b82f6, #60a5fa);
+            color: white;
+        }
+
+        .workflow-canvas {
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 2rem;
+            min-height: 400px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .workflow-step {
+            display: flex;
+            align-items: center;
+            margin: 1.5rem 0;
+            opacity: 0.5;
+            transition: all 0.5s ease;
+        }
+
+        .workflow-step.active {
+            opacity: 1;
+            animation: stepGlow 2s infinite;
+        }
+
+        @keyframes stepGlow {
+            0%, 100% { background: transparent; }
+            50% { background: rgba(59, 130, 246, 0.1); }
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, #3b82f6, #60a5fa);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-right: 1rem;
+        }
+
+        .step-content {
+            flex: 1;
+            padding: 1rem;
+            background: rgba(30, 58, 95, 0.3);
+            border-radius: 8px;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .step-title {
+            font-weight: 600;
+            color: #f1f5f9;
+            margin-bottom: 0.5rem;
+        }
+
+        .step-description {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        .step-agent {
+            display: inline-block;
+            background: rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+        }
+
+        .step-timing {
+            margin-left: auto;
+            text-align: right;
+            color: #22c55e;
+            font-weight: 600;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            grid-area: sidebar;
+            background: linear-gradient(180deg, #1e3a5f 0%, #0f172a 100%);
+            border-left: 1px solid #334155;
+            padding: 1.5rem;
+            overflow-y: auto;
+        }
+
+        .sidebar-section {
+            margin-bottom: 2rem;
+        }
+
+        .sidebar-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #f1f5f9;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #334155;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            background: rgba(30, 58, 95, 0.3);
+            border-radius: 8px;
+            border-left: 3px solid #3b82f6;
+        }
+
+        .activity-icon {
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(45deg, #3b82f6, #60a5fa);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-title {
+            font-weight: 600;
+            color: #f1f5f9;
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .activity-description {
+            color: #94a3b8;
+            font-size: 0.8rem;
+            line-height: 1.4;
+        }
+
+        .activity-time {
+            color: #60a5fa;
+            font-size: 0.8rem;
+            margin-top: 0.3rem;
+        }
+
+        /* Tooltips */
+        .tooltip {
+            position: absolute;
+            background: linear-gradient(45deg, #1e3a5f, #2d5aa0);
+            color: white;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            border: 1px solid #3b82f6;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+            max-width: 250px;
+        }
+
+        .tooltip.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .tooltip::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-bottom: 5px solid #2d5aa0;
+        }
+
+        /* Animations */
+        .data-flow {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #3b82f6, transparent);
+            animation: dataFlow 3s infinite;
+        }
+
+        @keyframes dataFlow {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .processing-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(251, 191, 36, 0.2);
+            border: 1px solid #fbbf24;
+            border-radius: 20px;
+            color: #fbbf24;
+            font-size: 0.9rem;
+        }
+
+        .spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid transparent;
+            border-top: 2px solid #fbbf24;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Performance Chart */
+        .chart-container {
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 1rem;
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chart-bars {
+            display: flex;
+            align-items: end;
+            justify-content: space-around;
+            height: 100%;
+            padding: 1rem 0;
+        }
+
+        .chart-bar {
+            width: 20px;
+            background: linear-gradient(0deg, #3b82f6, #60a5fa);
+            border-radius: 2px 2px 0 0;
+            animation: barGrow 2s ease-out;
+        }
+
+        @keyframes barGrow {
+            0% { height: 0; }
+        }
+
+        /* Real-time Updates */
+        .update-notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: linear-gradient(45deg, #22c55e, #16a34a);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(34, 197, 94, 0.3);
+            transform: translateX(400px);
+            transition: all 0.5s ease;
+            z-index: 1000;
+        }
+
+        .update-notification.show {
+            transform: translateX(0);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .command-center {
+                grid-template-columns: 200px 1fr 250px;
+            }
+            
+            .agents-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .command-center {
+                grid-template-areas: 
+                    "header"
+                    "main"
+                    "nav"
+                    "sidebar";
+                grid-template-columns: 1fr;
+                grid-template-rows: 80px 1fr auto auto;
+            }
+            
+            .agents-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="command-center">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <div class="aurora-logo">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <div>
+                    <div class="header-title">AURORA</div>
+                    <div style="font-size: 0.9rem; color: #93c5fd;">Cognitive Procurement Command Center</div>
+                </div>
+            </div>
+            
+            <div class="system-status">
+                <div class="status-indicator">
+                    <div class="status-dot"></div>
+                    <span>System Operational</span>
+                </div>
+                <div style="color: #94a3b8;">
+                    <i class="fas fa-clock"></i> 
+                    <span id="current-time"></span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="nav-panel">
+            <div class="nav-item active" data-view="dashboard">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <span>Dashboard</span>
+            </div>
+            <div class="nav-item" data-view="agents">
+                <i class="nav-icon fas fa-robot"></i>
+                <span>AI Agents</span>
+            </div>
+            <div class="nav-item" data-view="workflows">
+                <i class="nav-icon fas fa-sitemap"></i>
+                <span>Workflows</span>
+            </div>
+            <div class="nav-item" data-view="analytics">
+                <i class="nav-icon fas fa-chart-line"></i>
+                <span>Analytics</span>
+            </div>
+            <div class="nav-item" data-view="monitoring">
+                <i class="nav-icon fas fa-heartbeat"></i>
+                <span>Monitoring</span>
+            </div>
+            <div class="nav-item" data-view="settings">
+                <i class="nav-icon fas fa-cog"></i>
+                <span>Settings</span>
+            </div>
+        </nav>
+
+        <!-- Main Dashboard -->
+        <main class="main-dashboard">
+            <!-- KPI Grid -->
+            <div class="kpi-grid">
+                <div class="kpi-card" data-tooltip="Total annual savings achieved through AI optimization">
+                    <div class="kpi-header">
+                        <span class="kpi-title">Annual Savings</span>
+                        <i class="fas fa-dollar-sign" style="color: #22c55e;"></i>
+                    </div>
+                    <div class="kpi-value" id="annual-savings">$47.3M</div>
+                    <div class="kpi-change change-positive">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>+28.4% vs last year</span>
+                    </div>
+                </div>
+
+                <div class="kpi-card" data-tooltip="Average time to complete sourcing cycles">
+                    <div class="kpi-header">
+                        <span class="kpi-title">Avg Cycle Time</span>
+                        <i class="fas fa-clock" style="color: #60a5fa;"></i>
+                    </div>
+                    <div class="kpi-value" id="cycle-time">2.3 Days</div>
+                    <div class="kpi-change change-positive">
+                        <i class="fas fa-arrow-down"></i>
+                        <span>-89% vs baseline</span>
+                    </div>
+                </div>
+
+                <div class="kpi-card" data-tooltip="Percentage of procurement processes fully automated">
+                    <div class="kpi-header">
+                        <span class="kpi-title">Automation Rate</span>
+                        <i class="fas fa-robot" style="color: #8b5cf6;"></i>
+                    </div>
+                    <div class="kpi-value" id="automation-rate">94.7%</div>
+                    <div class="kpi-change change-positive">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>+12.3% this quarter</span>
+                    </div>
+                </div>
+
+                <div class="kpi-card" data-tooltip="Overall supplier risk score (lower is better)">
+                    <div class="kpi-header">
+                        <span class="kpi-title">Risk Score</span>
+                        <i class="fas fa-shield-alt" style="color: #f59e0b;"></i>
+                    </div>
+                    <div class="kpi-value" id="risk-score">2.1/10</div>
+                    <div class="kpi-change change-positive">
+                        <i class="fas fa-arrow-down"></i>
+                        <span>-67% vs industry avg</span>
+                    </div>
+                </div>
+
+                <div class="kpi-card" data-tooltip="Number of fraudulent transactions prevented this month">
+                    <div class="kpi-header">
+                        <span class="kpi-title">Fraud Prevented</span>
+                        <i class="fas fa-exclamation-triangle" style="color: #ef4444;"></i>
+                    </div>
+                    <div class="kpi-value" id="fraud-prevented">1,247</div>
+                    <div class="kpi-change change-positive">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>$3.2M protected</span>
+                    </div>
+                </div>
+
+                <div class="kpi-card" data-tooltip="AI decision accuracy across all agents">
+                    <div class="kpi-header">
+                        <span class="kpi-title">AI Accuracy</span>
+                        <i class="fas fa-bullseye" style="color: #10b981;"></i>
+                    </div>
+                    <div class="kpi-value" id="ai-accuracy">97.2%</div>
+                    <div class="kpi-change change-positive">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>+2.1% this month</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Agent Activity Center -->
+            <div class="agent-center">
+                <div class="agent-center-header">
+                    <h2 class="agent-center-title">
+                        <i class="fas fa-brain" style="color: #60a5fa; margin-right: 0.5rem;"></i>
+                        AI Agent Activity Center
+                    </h2>
+                    <div class="processing-indicator" id="processing-indicator" style="display: none;">
+                        <div class="spinner"></div>
+                        <span>Processing...</span>
+                    </div>
+                </div>
+                
+                <div class="agents-grid">
+                    <div class="agent-card" data-agent="aria" data-tooltip="ARIA is analyzing market conditions for IT hardware procurement">
+                        <div class="agent-avatar">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <div class="agent-name">ARIA</div>
+                        <div class="agent-status status-active">Active</div>
+                        <div class="agent-metrics">
+                            <div>Sourcing Projects: <strong>47</strong></div>
+                            <div>Avg Completion: <strong>2.1 days</strong></div>
+                        </div>
+                    </div>
+
+                    <div class="agent-card" data-agent="alex" data-tooltip="ALEX is reviewing contract terms for cloud services renewal">
+                        <div class="agent-avatar">
+                            <i class="fas fa-file-contract"></i>
+                        </div>
+                        <div class="agent-name">ALEX</div>
+                        <div class="agent-status status-thinking">Analyzing</div>
+                        <div class="agent-metrics">
+                            <div>Contracts: <strong>23</strong></div>
+                            <div>Risk Score: <strong>1.8/10</strong></div>
+                        </div>
+                    </div>
+
+                    <div class="agent-card" data-agent="apollo" data-tooltip="APOLLO is optimizing purchase orders for Q1 2025">
+                        <div class="agent-avatar">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <div class="agent-name">APOLLO</div>
+                        <div class="agent-status status-active">Optimizing</div>
+                        <div class="agent-metrics">
+                            <div>POs Processed: <strong>892</strong></div>
+                            <div>Cost Savings: <strong>$1.2M</strong></div>
+                        </div>
+                    </div>
+
+                    <div class="agent-card" data-agent="atlas" data-tooltip="ATLAS is conducting quality inspection on incoming shipments">
+                        <div class="agent-avatar">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <div class="agent-name">ATLAS</div>
+                        <div class="agent-status status-active">Inspecting</div>
+                        <div class="agent-metrics">
+                            <div>Inspections: <strong>156</strong></div>
+                            <div>Defects Found: <strong>3</strong></div>
+                        </div>
+                    </div>
+
+                    <div class="agent-card" data-agent="archer" data-tooltip="ARCHER is monitoring financial transactions for fraud patterns">
+                        <div class="agent-avatar">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="agent-name">ARCHER</div>
+                        <div class="agent-status status-active">Monitoring</div>
+                        <div class="agent-metrics">
+                            <div>Transactions: <strong>2,847</strong></div>
+                            <div>Threats Blocked: <strong>12</strong></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Workflow Simulation -->
+            <div class="workflow-section">
+                <div class="workflow-header">
+                    <h2 class="workflow-title">
+                        <i class="fas fa-sitemap" style="color: #60a5fa; margin-right: 0.5rem;"></i>
+                        Live Workflow Simulation
+                    </h2>
+                    <div class="simulation-controls">
+                        <button class="sim-button" id="new-supplier-sim">
+                            <i class="fas fa-plus"></i> New Supplier Onboarding
+                        </button>
+                        <button class="sim-button" id="emergency-procurement-sim">
+                            <i class="fas fa-bolt"></i> Emergency Procurement
+                        </button>
+                        <button class="sim-button primary" id="start-simulation">
+                            <i class="fas fa-play"></i> Start Simulation
+                        </button>
+                    </div>
+                </div>
+
+                <div class="workflow-canvas" id="workflow-canvas">
+                    <div class="workflow-step" id="step-1">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <div class="step-title">Requirement Analysis</div>
+                            <div class="step-description">APOLLO analyzes the urgent laptop procurement request</div>
+                            <div class="step-agent">APOLLO</div>
+                        </div>
+                        <div class="step-timing">
+                            <div>0.3s</div>
+                        </div>
+                    </div>
+
+                    <div class="workflow-step" id="step-2">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <div class="step-title">Supplier Discovery</div>
+                            <div class="step-description">ARIA identifies 12 qualified suppliers with immediate inventory</div>
+                            <div class="step-agent">ARIA</div>
+                        </div>
+                        <div class="step-timing">
+                            <div>1.7s</div>
+                        </div>
+                    </div>
+
+                    <div class="workflow-step" id="step-3">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <div class="step-title">Risk Assessment</div>
+                            <div class="step-description">ARCHER evaluates supplier financial stability and fraud risk</div>
+                            <div class="step-agent">ARCHER</div>
+                        </div>
+                        <div class="step-timing">
+                            <div>0.8s</div>
+                        </div>
+                    </div>
+
+                    <div class="workflow-step" id="step-4">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <div class="step-title">Contract Generation</div>
+                            <div class="step-description">ALEX generates optimized contract terms for emergency procurement</div>
+                            <div class="step-agent">ALEX</div>
+                        </div>
+                        <div class="step-timing">
+                            <div>2.1s</div>
+                        </div>
+                    </div>
+
+                    <div class="workflow-step" id="step-5">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <div class="step-title">Quality Validation</div>
+                            <div class="step-description">ATLAS validates supplier quality certifications and performance history</div>
+                            <div class="step-agent">ATLAS</div>
+                        </div>
+                        <div class="step-timing">
+                            <div>1.2s</div>
+                        </div>
+                    </div>
+
+                    <div class="workflow-step" id="step-6">
+                        <div class="step-number">6</div>
+                        <div class="step-content">
+                            <div class="step-title">Purchase Order Execution</div>
+                            <div class="step-description">APOLLO executes purchase order with optimal supplier selection</div>
+                            <div class="step-agent">APOLLO</div>
+                        </div>
+                        <div class="step-timing">
+                            <div>0.5s</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">
+                    <i class="fas fa-bolt" style="color: #fbbf24; margin-right: 0.5rem;"></i>
+                    Live Activity Feed
+                </h3>
+                
+                <div class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div class="activity-content">
+                        <div class="activity-title">Emergency Procurement Completed</div>
+                        <div class="activity-description">500 laptops sourced and ordered for new hire onboarding</div>
+                        <div class="activity-time">2 minutes ago</div>
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="activity-content">
+                        <div class="activity-title">Fraud Attempt Blocked</div>
+                        <div class="activity-description">ARCHER detected suspicious invoice from TechCorp Inc.</div>
+                        <div class="activity-time">5 minutes ago</div>
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <div class="activity-content">
+                        <div class="activity-title">Contract Renewal Optimized</div>
+                        <div class="activity-description">ALEX renegotiated cloud services contract, saving $280K annually</div>
+                        <div class="activity-time">12 minutes ago</div>
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <div class="activity-content">
+                        <div class="activity-title">New Supplier Discovered</div>
+                        <div class="activity-description">ARIA found alternative supplier with 15% cost savings potential</div>
+                        <div class="activity-time">18 minutes ago</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">
+                    <i class="fas fa-chart-line" style="color: #22c55e; margin-right: 0.5rem;"></i>
+                    Performance Metrics
+                </h3>
+                
+                <div class="chart-container">
+                    <div style="text-align: center; color: #94a3b8; margin-bottom: 1rem; font-size: 0.9rem;">
+                        Daily Savings Trend (Last 7 Days)
+                    </div>
+                    <div class="chart-bars">
+                        <div class="chart-bar" style="height: 60%;"></div>
+                        <div class="chart-bar" style="height: 75%;"></div>
+                        <div class="chart-bar" style="height: 45%;"></div>
+                        <div class="chart-bar" style="height: 90%;"></div>
+                        <div class="chart-bar" style="height: 65%;"></div>
+                        <div class="chart-bar" style="height: 85%;"></div>
+                        <div class="chart-bar" style="height: 100%;"></div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Tooltip -->
+    <div class="tooltip" id="tooltip"></div>
+
+    <!-- Update Notification -->
+    <div class="update-notification" id="update-notification">
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <i class="fas fa-check-circle"></i>
+            <span>Workflow completed successfully!</span>
+        </div>
+    </div>
+
+    <script>
+        // Initialize the dashboard
+        class AuroraDashboard {
+            constructor() {
+                this.currentStep = 0;
+                this.isSimulationRunning = false;
+                this.agents = ['aria', 'alex', 'apollo', 'atlas', 'archer'];
+                this.init();
+            }
+
+            init() {
+                this.updateTime();
+                this.setupEventListeners();
+                this.startRealtimeUpdates();
+                this.animateKPIs();
+                setInterval(() => this.updateTime(), 1000);
+            }
+
+            updateTime() {
+                const now = new Date();
+                const timeString = now.toLocaleTimeString('en-US', { 
+                    hour12: false,
+                    timeZone: 'UTC'
+                });
+                document.getElementById('current-time').textContent = `${timeString} UTC`;
+            }
+
+            setupEventListeners() {
+                // Navigation
+                document.querySelectorAll('.nav-item').forEach(item => {
+                    item.addEventListener('click', (e) => {
+                        document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+                        e.currentTarget.classList.add('active');
+                    });
+                });
+
+                // Agent cards
+                document.querySelectorAll('.agent-card').forEach(card => {
+                    card.addEventListener('click', (e) => {
+                        const agent = e.currentTarget.dataset.agent;
+                        this.highlightAgent(agent);
+                    });
+                });
+
+                // Simulation controls
+                document.getElementById('start-simulation').addEventListener('click', () => {
+                    this.startWorkflowSimulation();
+                });
+
+                document.getElementById('new-supplier-sim').addEventListener('click', () => {
+                    this.simulateNewSupplierOnboarding();
+                });
+
+                document.getElementById('emergency-procurement-sim').addEventListener('click', () => {
+                    this.simulateEmergencyProcurement();
+                });
+
+                // Tooltips
+                this.setupTooltips();
+            }
+
+            setupTooltips() {
+                const tooltip = document.getElementById('tooltip');
+                
+                document.querySelectorAll('[data-tooltip]').forEach(element => {
+                    element.addEventListener('mouseenter', (e) => {
+                        const text = e.target.dataset.tooltip;
+                        tooltip.textContent = text;
+                        tooltip.classList.add('show');
+                        
+                        const rect = e.target.getBoundingClientRect();
+                        tooltip.style.left = rect.left + (rect.width / 2) - (tooltip.offsetWidth / 2) + 'px';
+                        tooltip.style.top = rect.bottom + 10 + 'px';
+                    });
+
+                    element.addEventListener('mouseleave', () => {
+                        tooltip.classList.remove('show');
+                    });
+                });
+            }
+
+            highlightAgent(agentName) {
+                // Reset all agents
+                document.querySelectorAll('.agent-card').forEach(card => {
+                    card.classList.remove('active');
+                });
+
+                // Highlight selected agent
+                const agentCard = document.querySelector(`[data-agent="${agentName}"]`);
+                if (agentCard) {
+                    agentCard.classList.add('active');
+                    
+                    // Show processing indicator
+                    document.getElementById('processing-indicator').style.display = 'flex';
+                    
+                    setTimeout(() => {
+                        agentCard.classList.remove('active');
+                        document.getElementById('processing-indicator').style.display = 'none';
+                    }, 3000);
+                }
+            }
+
+            async startWorkflowSimulation() {
+                if (this.isSimulationRunning) return;
+                
+                this.isSimulationRunning = true;
+                this.currentStep = 0;
+
+                // Reset all steps
+                document.querySelectorAll('.workflow-step').forEach(step => {
+                    step.classList.remove('active');
+                });
+
+                const steps = document.querySelectorAll('.workflow-step');
+                const stepTimings = [300, 1700, 800, 2100, 1200, 500]; // milliseconds
+
+                for (let i = 0; i < steps.length; i++) {
+                    await this.executeStep(steps[i], stepTimings[i]);
+                }
+
+                this.showNotification('Workflow completed successfully!');
+                this.isSimulationRunning = false;
+            }
+
+            async executeStep(stepElement, duration) {
+                return new Promise((resolve) => {
+                    stepElement.classList.add('active');
+                    
+                    // Highlight corresponding agent
+                    const agentName = stepElement.querySelector('.step-agent').textContent.toLowerCase();
+                    const agentCard = document.querySelector(`[data-agent="${agentName}"]`);
+                    if (agentCard) {
+                        agentCard.classList.add('active');
+                    }
+
+                    setTimeout(() => {
+                        if (agentCard) {
+                            agentCard.classList.remove('active');
+                        }
+                        resolve();
+                    }, duration);
+                });
+            }
+
+            simulateNewSupplierOnboarding() {
+                this.showNotification('Simulating new supplier onboarding process...');
+                
+                // Update workflow steps for supplier onboarding
+                const steps = [
+                    { title: 'Supplier Information Collection', agent: 'ARIA', duration: '0.5s' },
+                    { title: 'Financial Stability Assessment', agent: 'ARCHER', duration: '2.1s' },
+                    { title: 'Compliance Verification', agent: 'ALEX', duration: '1.8s' },
+                    { title: 'Quality Certification Review', agent: 'ATLAS', duration: '1.3s' },
+                    { title: 'Performance Prediction', agent: 'APOLLO', duration: '0.9s' },
+                    { title: 'Supplier Onboarding Complete', agent: 'System', duration: '0.2s' }
+                ];
+
+                this.updateWorkflowSteps(steps);
+                setTimeout(() => this.startWorkflowSimulation(), 500);
+            }
+
+            simulateEmergencyProcurement() {
+                this.showNotification('Simulating emergency procurement scenario...');
+                
+                // Update workflow steps for emergency procurement
+                const steps = [
+                    { title: 'Emergency Request Analysis', agent: 'APOLLO', duration: '0.2s' },
+                    { title: 'Rapid Supplier Identification', agent: 'ARIA', duration: '0.8s' },
+                    { title: 'Express Risk Assessment', agent: 'ARCHER', duration: '0.5s' },
+                    { title: 'Emergency Contract Generation', agent: 'ALEX', duration: '1.1s' },
+                    { title: 'Quality Fast-Track Validation', agent: 'ATLAS', duration: '0.7s' },
+                    { title: 'Immediate PO Execution', agent: 'APOLLO', duration: '0.3s' }
+                ];
+
+                this.updateWorkflowSteps(steps);
+                setTimeout(() => this.startWorkflowSimulation(), 500);
+            }
+
+            updateWorkflowSteps(steps) {
+                const canvas = document.getElementById('workflow-canvas');
+                canvas.innerHTML = '';
+
+                steps.forEach((step, index) => {
+                    const stepElement = document.createElement('div');
+                    stepElement.className = 'workflow-step';
+                    stepElement.id = `step-${index + 1}`;
+                    stepElement.innerHTML = `
+                        <div class="step-number">${index + 1}</div>
+                        <div class="step-content">
+                            <div class="step-title">${step.title}</div>
+                            <div class="step-description">${step.agent} is processing this step</div>
+                            <div class="step-agent">${step.agent}</div>
+                        </div>
+                        <div class="step-timing">
+                            <div>${step.duration}</div>
+                        </div>
+                    `;
+                    canvas.appendChild(stepElement);
+                });
+            }
+
+            showNotification(message) {
+                const notification = document.getElementById('update-notification');
+                notification.querySelector('span').textContent = message;
+                notification.classList.add('show');
+                
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 4000);
+            }
+
+            animateKPIs() {
+                // Animate KPI values on load
+                const kpiValues = [
+                    { id: 'annual-savings', target: 47.3, suffix: 'M', prefix: '$' },
+                    { id: 'cycle-time', target: 2.3, suffix: ' Days' },
+                    { id: 'automation-rate', target: 94.7, suffix: '%' },
+                    { id: 'risk-score', target: 2.1, suffix: '/10' },
+                    { id: 'fraud-prevented', target: 1247, suffix: '' },
+                    { id: 'ai-accuracy', target: 97.2, suffix: '%' }
+                ];
+
+                kpiValues.forEach(kpi => {
+                    this.animateValue(kpi.id, 0, kpi.target, 2000, kpi.prefix, kpi.suffix);
+                });
+            }
+
+            animateValue(elementId, start, end, duration, prefix = '', suffix = '') {
+                const element = document.getElementById(elementId);
+                const range = end - start;
+                const increment = range / (duration / 16);
+                let current = start;
+
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= end) {
+                        current = end;
+                        clearInterval(timer);
+                    }
+                    
+                    const displayValue = suffix.includes('M') ? 
+                        current.toFixed(1) : 
+                        Math.round(current);
+                    
+                    element.textContent = `${prefix}${displayValue}${suffix}`;
+                }, 16);
+            }
+
+            startRealtimeUpdates() {
+                // Simulate real-time data updates
+                setInterval(() => {
+                    this.updateRealtimeMetrics();
+                }, 5000);
+
+                // Simulate random agent activity
+                setInterval(() => {
+                    this.simulateAgentActivity();
+                }, 3000);
+            }
+
+            updateRealtimeMetrics() {
+                // Slightly update KPI values to simulate real-time changes
+                const savingsElement = document.getElementById('annual-savings');
+                const currentSavings = parseFloat(savingsElement.textContent.replace('$', '').replace('M', ''));
+                const newSavings = currentSavings + (Math.random() * 0.1 - 0.05);
+                savingsElement.textContent = `$${newSavings.toFixed(1)}M`;
+
+                // Update other metrics similarly
+                const accuracyElement = document.getElementById('ai-accuracy');
+                const currentAccuracy = parseFloat(accuracyElement.textContent.replace('%', ''));
+                const newAccuracy = Math.max(95, Math.min(99, currentAccuracy + (Math.random() * 0.2 - 0.1)));
+                accuracyElement.textContent = `${newAccuracy.toFixed(1)}%`;
+            }
+
+            simulateAgentActivity() {
+                // Randomly highlight agents to show activity
+                const randomAgent = this.agents[Math.floor(Math.random() * this.agents.length)];
+                const agentCard = document.querySelector(`[data-agent="${randomAgent}"]`);
+                
+                if (agentCard && !agentCard.classList.contains('active')) {
+                    agentCard.classList.add('active');
+                    setTimeout(() => {
+                        agentCard.classList.remove('active');
+                    }, 2000);
+                }
+            }
+        }
+
+        // Initialize dashboard when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new AuroraDashboard();
+        });
+    </script>
+</body>
+</html>

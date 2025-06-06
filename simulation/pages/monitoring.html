@@ -1,0 +1,325 @@
+<div id="monitoring-page">
+    <!-- Page Header -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+        <div>
+            <h1 style="font-size: 2rem; font-weight: 700; color: #f1f5f9; margin-bottom: 0.5rem;">
+                <i class="fas fa-desktop" style="color: #60a5fa; margin-right: 0.5rem;"></i>
+                System Monitoring Center
+            </h1>
+            <p style="color: #94a3b8; font-size: 1.1rem;">Real-time system health, performance metrics, and operational intelligence</p>
+        </div>
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <button class="sim-button" id="refresh-monitoring-btn">
+                <i class="fas fa-sync-alt"></i> Refresh Data
+            </button>
+            <button class="sim-button" id="export-logs-btn">
+                <i class="fas fa-download"></i> Export Logs
+            </button>
+            <button class="sim-button" id="alert-settings-btn">
+                <i class="fas fa-bell"></i> Alert Settings
+            </button>
+        </div>
+    </div>
+
+    <!-- System Status Overview -->
+    <div class="analytics-kpi-grid" style="margin-bottom: 2rem;">
+        <div class="analytics-kpi-card">
+            <div class="kpi-icon" style="background: linear-gradient(45deg, #22c55e, #16a34a);">
+                <i class="fas fa-heartbeat"></i>
+            </div>
+            <div class="kpi-data">
+                <div class="kpi-value">99.9%</div>
+                <div class="kpi-label">System Uptime</div>
+                <div class="kpi-trend positive">
+                    <i class="fas fa-check"></i> Operational
+                </div>
+            </div>
+        </div>
+        <div class="analytics-kpi-card">
+            <div class="kpi-icon" style="background: linear-gradient(45deg, #3b82f6, #60a5fa);">
+                <i class="fas fa-tachometer-alt"></i>
+            </div>
+            <div class="kpi-data">
+                <div class="kpi-value">147ms</div>
+                <div class="kpi-label">Avg Response Time</div>
+                <div class="kpi-trend positive">
+                    <i class="fas fa-arrow-down"></i> -23ms
+                </div>
+            </div>
+        </div>
+        <div class="analytics-kpi-card">
+            <div class="kpi-icon" style="background: linear-gradient(45deg, #8b5cf6, #a855f7);">
+                <i class="fas fa-robot"></i>
+            </div>
+            <div class="kpi-data">
+                <div class="kpi-value">5/5</div>
+                <div class="kpi-label">Agents Online</div>
+                <div class="kpi-trend positive">
+                    <i class="fas fa-check"></i> All Active
+                </div>
+            </div>
+        </div>
+        <div class="analytics-kpi-card">
+            <div class="kpi-icon" style="background: linear-gradient(45deg, #f59e0b, #fbbf24);">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <div class="kpi-data">
+                <div class="kpi-value">2</div>
+                <div class="kpi-label">Active Alerts</div>
+                <div class="kpi-trend negative">
+                    <i class="fas fa-bell"></i> Monitoring
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Agent Collaboration Matrix -->
+    <div class="collaboration-matrix">
+        <h3 style="font-size: 1.2rem; font-weight: 600; color: #f1f5f9; margin-bottom: 0.5rem;">
+            <i class="fas fa-network-wired" style="color: #60a5fa; margin-right: 0.5rem;"></i>
+            Agent Collaboration Matrix
+        </h3>
+        <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 1rem;">Real-time collaboration strength between agents</p>
+        <div class="matrix-grid">
+            <div class="matrix-cell header"></div>
+            <div class="matrix-cell header">ARIA</div>
+            <div class="matrix-cell header">ALEX</div>
+            <div class="matrix-cell header">APOLLO</div>
+            <div class="matrix-cell header">ATLAS</div>
+            <div class="matrix-cell header">ARCHER</div>
+            <div class="matrix-cell header">ARIA</div>
+            <div class="matrix-cell">-</div>
+            <div class="matrix-cell high">94%</div>
+            <div class="matrix-cell high">87%</div>
+            <div class="matrix-cell medium">72%</div>
+            <div class="matrix-cell high">91%</div>
+            <div class="matrix-cell header">ALEX</div>
+            <div class="matrix-cell high">94%</div>
+            <div class="matrix-cell">-</div>
+            <div class="matrix-cell high">89%</div>
+            <div class="matrix-cell medium">68%</div>
+            <div class="matrix-cell high">96%</div>
+            <div class="matrix-cell header">APOLLO</div>
+            <div class="matrix-cell high">87%</div>
+            <div class="matrix-cell high">89%</div>
+            <div class="matrix-cell">-</div>
+            <div class="matrix-cell high">92%</div>
+            <div class="matrix-cell high">85%</div>
+            <div class="matrix-cell header">ATLAS</div>
+            <div class="matrix-cell medium">72%</div>
+            <div class="matrix-cell medium">68%</div>
+            <div class="matrix-cell high">92%</div>
+            <div class="matrix-cell">-</div>
+            <div class="matrix-cell medium">74%</div>
+            <div class="matrix-cell header">ARCHER</div>
+            <div class="matrix-cell high">91%</div>
+            <div class="matrix-cell high">96%</div>
+            <div class="matrix-cell high">85%</div>
+            <div class="matrix-cell medium">74%</div>
+            <div class="matrix-cell">-</div>
+        </div>
+    </div>
+
+    <!-- Monitoring Dashboard Grid -->
+    <div class="analytics-main-grid">
+        <!-- System Performance -->
+        <div class="analytics-card large">
+            <div class="analytics-card-header">
+                <h3 class="analytics-title">
+                    <i class="fas fa-chart-line"></i>
+                    System Performance Metrics
+                </h3>
+                <div class="analytics-controls">
+                    <button class="analytics-btn" onclick="toggleMetrics('performance')">
+                        <i class="fas fa-cog"></i> Configure
+                    </button>
+                </div>
+            </div>
+            <div class="analytics-content">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
+                    <div class="metric-box">
+                        <div class="metric-label">CPU Usage</div>
+                        <div class="metric-value">23.4%</div>
+                        <div class="metric-bar">
+                            <div class="metric-fill" style="width: 23.4%; background: #22c55e;"></div>
+                        </div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">Memory Usage</div>
+                        <div class="metric-value">67.8%</div>
+                        <div class="metric-bar">
+                            <div class="metric-fill" style="width: 67.8%; background: #f59e0b;"></div>
+                        </div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">Disk I/O</div>
+                        <div class="metric-value">12.1%</div>
+                        <div class="metric-bar">
+                            <div class="metric-fill" style="width: 12.1%; background: #22c55e;"></div>
+                        </div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">Network</div>
+                        <div class="metric-value">34.5%</div>
+                        <div class="metric-bar">
+                            <div class="metric-fill" style="width: 34.5%; background: #3b82f6;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Agent Status -->
+        <div class="analytics-card">
+            <div class="analytics-card-header">
+                <h3 class="analytics-title">
+                    <i class="fas fa-brain"></i>
+                    AI Agent Health
+                </h3>
+            </div>
+            <div class="analytics-content">
+                <div class="agent-status-list">
+                    <div class="agent-status-item">
+                        <div class="agent-status-info">
+                            <div class="agent-status-name">ARIA</div>
+                            <div class="agent-status-type">Sourcing Intelligence</div>
+                        </div>
+                        <div class="agent-status-indicator online"></div>
+                        <div class="agent-status-metrics">
+                            <div class="status-metric">97.2% Accuracy</div>
+                            <div class="status-metric">1.2s Avg Response</div>
+                        </div>
+                    </div>
+                    <div class="agent-status-item">
+                        <div class="agent-status-info">
+                            <div class="agent-status-name">ALEX</div>
+                            <div class="agent-status-type">Contract Intelligence</div>
+                        </div>
+                        <div class="agent-status-indicator online"></div>
+                        <div class="agent-status-metrics">
+                            <div class="status-metric">94.8% Accuracy</div>
+                            <div class="status-metric">2.1s Avg Response</div>
+                        </div>
+                    </div>
+                    <div class="agent-status-item">
+                        <div class="agent-status-info">
+                            <div class="agent-status-name">APOLLO</div>
+                            <div class="agent-status-type">Predictive Intelligence</div>
+                        </div>
+                        <div class="agent-status-indicator online"></div>
+                        <div class="agent-status-metrics">
+                            <div class="status-metric">96.1% Accuracy</div>
+                            <div class="status-metric">0.8s Avg Response</div>
+                        </div>
+                    </div>
+                    <div class="agent-status-item">
+                        <div class="agent-status-info">
+                            <div class="agent-status-name">ATLAS</div>
+                            <div class="agent-status-type">Quality Intelligence</div>
+                        </div>
+                        <div class="agent-status-indicator warning"></div>
+                        <div class="agent-status-metrics">
+                            <div class="status-metric">91.5% Accuracy</div>
+                            <div class="status-metric">3.2s Avg Response</div>
+                        </div>
+                    </div>
+                    <div class="agent-status-item">
+                        <div class="agent-status-info">
+                            <div class="agent-status-name">ARCHER</div>
+                            <div class="agent-status-type">Financial Intelligence</div>
+                        </div>
+                        <div class="agent-status-indicator online"></div>
+                        <div class="agent-status-metrics">
+                            <div class="status-metric">99.1% Accuracy</div>
+                            <div class="status-metric">0.5s Avg Response</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Active Alerts -->
+        <div class="analytics-card large">
+            <div class="analytics-card-header">
+                <h3 class="analytics-title">
+                    <i class="fas fa-bell"></i>
+                    Active Alerts & Notifications
+                </h3>
+                <div class="analytics-controls">
+                    <button class="analytics-btn" onclick="clearAllAlerts()">
+                        <i class="fas fa-times"></i> Clear All
+                    </button>
+                </div>
+            </div>
+            <div class="analytics-content">
+                <div class="alerts-list">
+                    <div class="alert-item warning">
+                        <div class="alert-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="alert-content">
+                            <div class="alert-title">ATLAS Performance Degradation</div>
+                            <div class="alert-description">Quality detection accuracy dropped below 95% threshold</div>
+                            <div class="alert-time">5 minutes ago</div>
+                        </div>
+                        <div class="alert-actions">
+                            <button class="alert-btn" onclick="investigateAlert('atlas-perf')">Investigate</button>
+                            <button class="alert-btn" onclick="dismissAlert('atlas-perf')">Dismiss</button>
+                        </div>
+                    </div>
+                    <div class="alert-item info">
+                        <div class="alert-icon">
+                            <i class="fas fa-info-circle"></i>
+                        </div>
+                        <div class="alert-content">
+                            <div class="alert-title">Scheduled Maintenance Window</div>
+                            <div class="alert-description">System maintenance scheduled for tonight 2:00 AM - 4:00 AM UTC</div>
+                            <div class="alert-time">12 minutes ago</div>
+                        </div>
+                        <div class="alert-actions">
+                            <button class="alert-btn" onclick="viewMaintenance()">View Details</button>
+                            <button class="alert-btn" onclick="dismissAlert('maintenance')">Dismiss</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- API Performance -->
+        <div class="analytics-card">
+            <div class="analytics-card-header">
+                <h3 class="analytics-title">
+                    <i class="fas fa-plug"></i>
+                    API Performance
+                </h3>
+            </div>
+            <div class="analytics-content">
+                <div class="api-metrics">
+                    <div class="api-metric-item">
+                        <div class="api-name">Supplier Integration API</div>
+                        <div class="api-status online">Online</div>
+                        <div class="api-stats">
+                            <span>1,247 calls/hour</span>
+                            <span>98.2% success rate</span>
+                        </div>
+                    </div>
+                    <div class="api-metric-item">
+                        <div class="api-name">Contract Management API</div>
+                        <div class="api-status online">Online</div>
+                        <div class="api-stats">
+                            <span>892 calls/hour</span>
+                            <span>99.1% success rate</span>
+                        </div>
+                    </div>
+                    <div class="api-metric-item">
+                        <div class="api-name">Analytics API</div>
+                        <div class="api-status online">Online</div>
+                        <div class="api-stats">
+                            <span>2,156 calls/hour</span>
+                            <span>97.8% success rate</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

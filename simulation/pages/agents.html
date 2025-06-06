@@ -1,0 +1,293 @@
+<!-- AI Agents Section Header -->
+<div class="agents-section-header">
+    <h1 class="agents-section-title">
+        <i class="fas fa-robot" style="color: #60a5fa; margin-right: 0.5rem;"></i>
+        AI Agents Dashboard
+    </h1>
+    <p class="agents-section-subtitle">Meet your cognitive procurement team and monitor their performance in real time</p>
+    <div class="agents-controls">
+        <button class="sim-button" id="create-new-agent">
+            <i class="fas fa-plus"></i> Create New Agent
+        </button>
+        <button class="sim-button" id="train-all-agents">
+            <i class="fas fa-graduation-cap"></i> Train All Agents
+        </button>
+        <button class="sim-button" id="collapse-all-agents" onclick="collapseAllAgents()">
+            <i class="fas fa-compress"></i> Collapse All
+        </button>
+        <button class="sim-button" id="expand-all-agents" onclick="expandAllAgents()">
+            <i class="fas fa-expand"></i> Expand All
+        </button>
+    </div>
+</div>
+
+<!-- Agents Grid -->
+<div class="agents-grid-layout">
+    <!-- ARIA Card -->
+    <div class="agent-card aria" id="aria-card">
+        <div class="agent-card-header">
+            <div class="agent-info">
+                <div class="agent-avatar aria"><i class="fas fa-search"></i></div>
+                <div class="agent-details">
+                    <h3>ARIA</h3>
+                    <div class="agent-role">Sourcing Intelligence Specialist</div>
+                    <div class="agent-status"><span class="status-indicator"></span> Online</div>
+                </div>
+            </div>
+            <div class="agent-controls">
+                <button class="agent-control-btn"><i class="fas fa-sync-alt"></i> Refresh</button>
+                <button class="agent-control-btn"><i class="fas fa-cog"></i> Configure</button>
+                <button class="collapse-btn" onclick="toggleAgentCard('aria')" title="Collapse/Expand"><i class="fas fa-chevron-up"></i></button>
+            </div>
+        </div>
+        <div class="agent-detail-content">
+            <div class="agent-capabilities">
+                <div class="capability-title"><i class="fas fa-cogs"></i> Core Capabilities</div>
+                <div class="capability-list">
+                    <div class="capability-item"><i class="fas fa-search capability-icon"></i><span>Supplier Discovery</span></div>
+                    <div class="capability-item"><i class="fas fa-chart-bar capability-icon"></i><span>Market Intelligence</span></div>
+                    <div class="capability-item"><i class="fas fa-balance-scale capability-icon"></i><span>Spend Analysis</span></div>
+                    <div class="capability-item"><i class="fas fa-bullseye capability-icon"></i><span>Opportunity Sensing</span></div>
+                    <div class="capability-item"><i class="fas fa-lightbulb capability-icon"></i><span>Category Strategy</span></div>
+                </div>
+            </div>
+            <div class="agent-brain-visual">
+                <h4 style="color: #f1f5f9; margin-bottom: 1rem;">AI Brain Modules</h4>
+                <div class="brain-modules">
+                    <div class="brain-module"><div class="brain-module-icon"><i class="fas fa-brain"></i></div><div class="brain-module-name">Market Reasoning Brain</div><div class="brain-module-status">Active</div></div>
+                    <div class="brain-module"><div class="brain-module-icon"><i class="fas fa-database"></i></div><div class="brain-module-name">Supplier Graph</div><div class="brain-module-status">Active</div></div>
+                    <div class="brain-module"><div class="brain-module-icon"><i class="fas fa-chart-line"></i></div><div class="brain-module-name">Spend Analyzer</div><div class="brain-module-status">Active</div></div>
+                </div>
+            </div>
+            <div class="agent-metrics-grid">
+                <div class="metric-card"><div class="metric-value">1,847</div><div class="metric-label">Suppliers Analyzed</div></div>
+                <div class="metric-card"><div class="metric-value">94.7%</div><div class="metric-label">Accuracy</div></div>
+                <div class="metric-card"><div class="metric-value">$2.1M</div><div class="metric-label">Savings Identified</div></div>
+                <div class="metric-card"><div class="metric-value">0.8s</div><div class="metric-label">Response Time</div></div>
+            </div>
+            <div>
+                <h4 style="color: #f1f5f9; margin-bottom: 1rem;">Recent Activity</h4>
+                <div class="agent-activity-stream">
+                    <div class="activity-stream-item"><div class="activity-stream-time">1m ago</div><div class="activity-stream-content"><div class="activity-stream-title">Supplier Discovery</div><div class="activity-stream-desc">Identified 12 new suppliers for IT hardware</div></div></div>
+                    <div class="activity-stream-item"><div class="activity-stream-time">3m ago</div><div class="activity-stream-content"><div class="activity-stream-title">Spend Analysis</div><div class="activity-stream-desc">Analyzed $1.2M spend across 3 categories</div></div></div>
+                    <div class="activity-stream-item"><div class="activity-stream-time">7m ago</div><div class="activity-stream-content"><div class="activity-stream-title">Opportunity Sensing</div><div class="activity-stream-desc">Flagged 2 new sourcing opportunities</div></div></div>
+                    <div class="activity-stream-item"><div class="activity-stream-time">12m ago</div><div class="activity-stream-content"><div class="activity-stream-title">Market Intelligence</div><div class="activity-stream-desc">Updated market trends for Q2</div></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ALEX Card -->
+    <div class="agent-card alex" id="alex-card">
+        <div class="agent-card-header">
+            <div class="agent-info">
+                <div class="agent-avatar alex"><i class="fas fa-file-contract"></i></div>
+                <div class="agent-details">
+                    <h3>ALEX</h3>
+                    <div class="agent-role">Contract Intelligence Virtuoso</div>
+                    <div class="agent-status"><span class="status-indicator"></span> Online</div>
+                </div>
+            </div>
+            <div class="agent-controls">
+                <button class="agent-control-btn"><i class="fas fa-sync-alt"></i> Refresh</button>
+                <button class="agent-control-btn"><i class="fas fa-cog"></i> Configure</button>
+                <button class="collapse-btn" onclick="toggleAgentCard('alex')" title="Collapse/Expand"><i class="fas fa-chevron-up"></i></button>
+            </div>
+        </div>
+        <div class="agent-detail-content">
+            <div class="agent-capabilities">
+                <div class="capability-title"><i class="fas fa-cogs"></i> Core Capabilities</div>
+                <div class="capability-list">
+                    <div class="capability-item"><i class="fas fa-magic capability-icon"></i><span>Automated Contract Creation</span></div>
+                    <div class="capability-item"><i class="fas fa-shield-alt capability-icon"></i><span>Risk Analysis & Mitigation</span></div>
+                    <div class="capability-item"><i class="fas fa-check-double capability-icon"></i><span>Compliance Validation</span></div>
+                    <div class="capability-item"><i class="fas fa-handshake capability-icon"></i><span>Performance Optimization</span></div>
+                    <div class="capability-item"><i class="fas fa-search capability-icon"></i><span>Clause Intelligence</span></div>
+                    <div class="capability-item"><i class="fas fa-balance-scale capability-icon"></i><span>Legal Reasoning Engine</span></div>
+                </div>
+            </div>
+            <div class="agent-brain-visual">
+                <h4 style="color: #f1f5f9; margin-bottom: 1rem;">AI Brain Modules</h4>
+                <div class="brain-modules">
+                    <div class="brain-module"><div class="brain-module-icon"><i class="fas fa-brain"></i></div><div class="brain-module-name">Legal Reasoning Brain</div><div class="brain-module-status">Active</div></div>
+                    <div class="brain-module"><div class="brain-module-icon"><i class="fas fa-language"></i></div><div class="brain-module-name">Contract NER</div><div class="brain-module-status">Active</div></div>
+                    <div class="brain-module"><div class="brain-module-icon"><i class="fas fa-magic"></i></div><div class="brain-module-name">Contract Generator</div><div class="brain-module-status">Active</div></div>
+                    <div class="brain-module"><div class="brain-module-icon"><i class="fas fa-exclamation-triangle"></i></div><div class="brain-module-name">Risk Analyzer</div><div class="brain-module-status">Active</div></div>
+                </div>
+            </div>
+            <div class="agent-metrics-grid">
+                <div class="metric-card"><div class="metric-value">2,847</div><div class="metric-label">Contracts Processed</div></div>
+                <div class="metric-card"><div class="metric-value">96.8%</div><div class="metric-label">Risk Detection Rate</div></div>
+                <div class="metric-card"><div class="metric-value">$14.2M</div><div class="metric-label">Value Recovered</div></div>
+                <div class="metric-card"><div class="metric-value">1.4s</div><div class="metric-label">Analysis Time</div></div>
+            </div>
+            <div>
+                <h4 style="color: #f1f5f9; margin-bottom: 1rem;">Recent Activity</h4>
+                <div class="agent-activity-stream">
+                    <div class="activity-stream-item"><div class="activity-stream-time">90s ago</div><div class="activity-stream-content"><div class="activity-stream-title">Automated Contract Generation</div><div class="activity-stream-desc">Generated 47 purchase agreements with optimized terms</div></div></div>
+                    <div class="activity-stream-item"><div class="activity-stream-time">4m ago</div><div class="activity-stream-content"><div class="activity-stream-title">Risk Clause Detection</div><div class="activity-stream-desc">Flagged 8 high-risk clauses across 12 supplier contracts</div></div></div>
+                    <div class="activity-stream-item"><div class="activity-stream-time">8m ago</div><div class="activity-stream-content"><div class="activity-stream-title">Compliance Audit Complete</div><div class="activity-stream-desc">100% GDPR compliance verified for Q1 contracts</div></div></div>
+                    <div class="activity-stream-item"><div class="activity-stream-time">15m ago</div><div class="activity-stream-content"><div class="activity-stream-title">Value Optimization</div><div class="activity-stream-desc">Renegotiated payment terms recovering $1.4M value</div></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- APOLLO Card -->
+    <div class="agent-card apollo" id="apollo-card">
+        <div class="agent-card-header">
+            <div class="agent-info">
+                <div class="agent-avatar apollo"><i class="fas fa-shopping-cart"></i></div>
+                <div class="agent-details">
+                    <h3>APOLLO</h3>
+                    <div class="agent-role">Autonomous Purchasing Agent</div>
+                    <div class="agent-status"><span class="status-indicator"></span> Online</div>
+                </div>
+            </div>
+            <div class="agent-controls">
+                <button class="agent-control-btn"><i class="fas fa-sync-alt"></i> Refresh</button>
+                <button class="agent-control-btn"><i class="fas fa-cog"></i> Configure</button>
+                <button class="collapse-btn" onclick="toggleAgentCard('apollo')" title="Collapse/Expand"><i class="fas fa-chevron-up"></i></button>
+            </div>
+        </div>
+        <div class="agent-detail-content">
+            <div class="agent-capabilities">
+                <div class="capability-title"><i class="fas fa-cogs"></i> Core Capabilities</div>
+                <div class="capability-list">
+                    <div class="capability-item"><i class="fas fa-shopping-cart capability-icon"></i><span>Automated Purchasing</span></div>
+                    <div class="capability-item"><i class="fas fa-rocket capability-icon"></i><span>Order Execution</span></div>
+                    <div class="capability-item"><i class="fas fa-bolt capability-icon"></i><span>Dynamic Bidding</span></div>
+                    <div class="capability-item"><i class="fas fa-balance-scale capability-icon"></i><span>Policy Compliance</span></div>
+                    <div class="capability-item"><i class="fas fa-chart-line capability-icon"></i><span>Spend Optimization</span></div>
+                </div>
+            </div>
+            <div class="agent-brain-visual">
+                <h4 style="color: #f1f5f9; margin-bottom: 1rem;">AI Brain Modules</h4>
+                <div class="brain-modules">
+                    <div class="brain-module"><div class="brain-module-icon"><i class="fas fa-brain"></i></div><div class="brain-module-name">Order Brain</div><div class="brain-module-status">Active</div></div>
+                    <div class="brain-module"><div class="brain-module-icon"><i class="fas fa-rocket"></i></div><div class="brain-module-name">Bid Engine</div><div class="brain-module-status">Active</div></div>
+                    <div class="brain-module"><div class="brain-module-icon"><i class="fas fa-balance-scale"></i></div><div class="brain-module-name">Compliance Checker</div><div class="brain-module-status">Active</div></div>
+                </div>
+            </div>
+            <div class="agent-metrics-grid">
+                <div class="metric-card"><div class="metric-value">3,521</div><div class="metric-label">Orders Placed</div></div>
+                <div class="metric-card"><div class="metric-value">98.2%</div><div class="metric-label">Success Rate</div></div>
+                <div class="metric-card"><div class="metric-value">$5.7M</div><div class="metric-label">Savings Realized</div></div>
+                <div class="metric-card"><div class="metric-value">1.2s</div><div class="metric-label">Execution Time</div></div>
+            </div>
+            <div>
+                <h4 style="color: #f1f5f9; margin-bottom: 1rem;">Recent Activity</h4>
+                <div class="agent-activity-stream">
+                    <div class="activity-stream-item"><div class="activity-stream-time">2m ago</div><div class="activity-stream-content"><div class="activity-stream-title">Order Executed</div><div class="activity-stream-desc">Placed 23 orders for office supplies</div></div></div>
+                    <div class="activity-stream-item"><div class="activity-stream-time">6m ago</div><div class="activity-stream-content"><div class="activity-stream-title">Dynamic Bidding</div><div class="activity-stream-desc">Won 5 competitive bids</div></div></div>
+                    <div class="activity-stream-item"><div class="activity-stream-time">10m ago</div><div class="activity-stream-content"><div class="activity-stream-title">Spend Optimization</div><div class="activity-stream-desc">Reduced costs by $12,500</div></div></div>
+                    <div class="activity-stream-item"><div class="activity-stream-time">18m ago</div><div class="activity-stream-content"><div class="activity-stream-title">Policy Compliance</div><div class="activity-stream-desc">100% compliance for all orders</div></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ATLAS Card -->
+    <div class="agent-card atlas" id="atlas-card">
+        <div class="agent-card-header">
+            <div class="agent-info">
+                <div class="agent-avatar atlas"><i class="fas fa-eye"></i></div>
+                <div class="agent-details">
+                    <h3>ATLAS</h3>
+                    <div class="agent-role">Quality Assurance Sentinel</div>
+                    <div class="agent-status"><span class="status-indicator"></span> Online</div>
+                </div>
+            </div>
+            <div class="agent-controls">
+                <button class="agent-control-btn"><i class="fas fa-sync-alt"></i> Refresh</button>
+                <button class="agent-control-btn"><i class="fas fa-cog"></i> Configure</button>
+                <button class="collapse-btn" onclick="toggleAgentCard('atlas')" title="Collapse/Expand"><i class="fas fa-chevron-up"></i></button>
+            </div>
+        </div>
+        <div class="agent-detail-content">
+            <div class="agent-capabilities">
+                <div class="capability-title"><i class="fas fa-cogs"></i> Core Capabilities</div>
+                <div class="capability-list">
+                    <div class="capability-item"><i class="fas fa-eye capability-icon"></i><span>Quality Inspection</span></div>
+                    <div class="capability-item"><i class="fas fa-vial capability-icon"></i><span>Lab Testing</span></div>
+                    <div class="capability-item"><i class="fas fa-clipboard-check capability-icon"></i><span>Compliance Audits</span></div>
+                    <div class="capability-item"><i class="fas fa-chart-pie capability-icon"></i><span>Defect Analytics</span></div>
+                    <div class="capability-item"><i class="fas fa-bug capability-icon"></i><span>Anomaly Detection</span></div>
+                </div>
+            </div>
+            <div class="agent-brain-visual">
+                <h4 style="color: #f1f5f9; margin-bottom: 1rem;">AI Brain Modules</h4>
+                <div class="brain-modules">
+                    <div class="brain-module"><div class="brain-module-icon"><i class="fas fa-brain"></i></div><div class="brain-module-name">Inspection Brain</div><div class="brain-module-status">Active</div></div>
+                    <div class="brain-module"><div class="brain-module-icon"><i class="fas fa-vial"></i></div><div class="brain-module-name">Lab Analyzer</div><div class="brain-module-status">Active</div></div>
+                    <div class="brain-module"><div class="brain-module-icon"><i class="fas fa-bug"></i></div><div class="brain-module-name">Defect Detector</div><div class="brain-module-status">Active</div></div>
+                </div>
+            </div>
+            <div class="agent-metrics-grid">
+                <div class="metric-card"><div class="metric-value">1,923</div><div class="metric-label">Inspections</div></div>
+                <div class="metric-card"><div class="metric-value">96.5%</div><div class="metric-label">Pass Rate</div></div>
+                <div class="metric-card"><div class="metric-value">$3.8M</div><div class="metric-label">Defects Prevented</div></div>
+                <div class="metric-card"><div class="metric-value">2.1s</div><div class="metric-label">Avg Inspection</div></div>
+            </div>
+            <div>
+                <h4 style="color: #f1f5f9; margin-bottom: 1rem;">Recent Activity</h4>
+                <div class="agent-activity-stream">
+                    <div class="activity-stream-item"><div class="activity-stream-time">3m ago</div><div class="activity-stream-content"><div class="activity-stream-title">Quality Inspection</div><div class="activity-stream-desc">Inspected 54 shipments</div></div></div>
+                    <div class="activity-stream-item"><div class="activity-stream-time">7m ago</div><div class="activity-stream-content"><div class="activity-stream-title">Defect Analytics</div><div class="activity-stream-desc">Detected 3 anomalies in batch #A12</div></div></div>
+                    <div class="activity-stream-item"><div class="activity-stream-time">11m ago</div><div class="activity-stream-content"><div class="activity-stream-title">Compliance Audit</div><div class="activity-stream-desc">Completed ISO 9001 audit</div></div></div>
+                    <div class="activity-stream-item"><div class="activity-stream-time">20m ago</div><div class="activity-stream-content"><div class="activity-stream-title">Lab Testing</div><div class="activity-stream-desc">Tested 8 product samples</div></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ARCHER Card -->
+    <div class="agent-card archer" id="archer-card">
+        <div class="agent-card-header">
+            <div class="agent-info">
+                <div class="agent-avatar archer"><i class="fas fa-shield-alt"></i></div>
+                <div class="agent-details">
+                    <h3>ARCHER</h3>
+                    <div class="agent-role">Fraud Detection Guardian</div>
+                    <div class="agent-status"><span class="status-indicator"></span> Online</div>
+                </div>
+            </div>
+            <div class="agent-controls">
+                <button class="agent-control-btn"><i class="fas fa-sync-alt"></i> Refresh</button>
+                <button class="agent-control-btn"><i class="fas fa-cog"></i> Configure</button>
+                <button class="collapse-btn" onclick="toggleAgentCard('archer')" title="Collapse/Expand"><i class="fas fa-chevron-up"></i></button>
+            </div>
+        </div>
+        <div class="agent-detail-content">
+            <div class="agent-capabilities">
+                <div class="capability-title"><i class="fas fa-cogs"></i> Core Capabilities</div>
+                <div class="capability-list">
+                    <div class="capability-item"><i class="fas fa-shield-alt capability-icon"></i><span>Fraud Detection</span></div>
+                    <div class="capability-item"><i class="fas fa-user-secret capability-icon"></i><span>Risk Scoring</span></div>
+                    <div class="capability-item"><i class="fas fa-bug capability-icon"></i><span>Anomaly Detection</span></div>
+                    <div class="capability-item"><i class="fas fa-balance-scale capability-icon"></i><span>Policy Enforcement</span></div>
+                    <div class="capability-item"><i class="fas fa-search capability-icon"></i><span>Transaction Monitoring</span></div>
+                </div>
+            </div>
+            <div class="agent-brain-visual">
+                <h4 style="color: #f1f5f9; margin-bottom: 1rem;">AI Brain Modules</h4>
+                <div class="brain-modules">
+                    <div class="brain-module"><div class="brain-module-icon"><i class="fas fa-brain"></i></div><div class="brain-module-name">Fraud Brain</div><div class="brain-module-status">Active</div></div>
+                    <div class="brain-module"><div class="brain-module-icon"><i class="fas fa-user-secret"></i></div><div class="brain-module-name">Risk Scorer</div><div class="brain-module-status">Active</div></div>
+                    <div class="brain-module"><div class="brain-module-icon"><i class="fas fa-bug"></i></div><div class="brain-module-name">Anomaly Detector</div><div class="brain-module-status">Active</div></div>
+                </div>
+            </div>
+            <div class="agent-metrics-grid">
+                <div class="metric-card"><div class="metric-value">2,156</div><div class="metric-label">Transactions Monitored</div></div>
+                <div class="metric-card"><div class="metric-value">99.1%</div><div class="metric-label">Detection Rate</div></div>
+                <div class="metric-card"><div class="metric-value">$8.3M</div><div class="metric-label">Fraud Prevented</div></div>
+                <div class="metric-card"><div class="metric-value">0.9s</div><div class="metric-label">Detection Time</div></div>
+            </div>
+            <div>
+                <h4 style="color: #f1f5f9; margin-bottom: 1rem;">Recent Activity</h4>
+                <div class="agent-activity-stream">
+                    <div class="activity-stream-item"><div class="activity-stream-time">2m ago</div><div class="activity-stream-content"><div class="activity-stream-title">Fraud Detected</div><div class="activity-stream-desc">Blocked suspicious transaction #A123</div></div></div>
+                    <div class="activity-stream-item"><div class="activity-stream-time">5m ago</div><div class="activity-stream-content"><div class="activity-stream-title">Risk Scoring</div><div class="activity-stream-desc">Flagged 2 high-risk suppliers</div></div></div>
+                    <div class="activity-stream-item"><div class="activity-stream-time">9m ago</div><div class="activity-stream-content"><div class="activity-stream-title">Anomaly Detection</div><div class="activity-stream-desc">Detected unusual pattern in Q2 data</div></div></div>
+                    <div class="activity-stream-item"><div class="activity-stream-time">14m ago</div><div class="activity-stream-content"><div class="activity-stream-title">Policy Enforcement</div><div class="activity-stream-desc">Enforced new anti-fraud policy</div></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

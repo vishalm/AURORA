@@ -1,0 +1,626 @@
+<div id="analytics-page">
+    <!-- Page Header -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+        <div>
+            <h1 style="font-size: 2rem; font-weight: 700; color: #f1f5f9; margin-bottom: 0.5rem;">
+                <i class="fas fa-chart-line" style="color: #60a5fa; margin-right: 0.5rem;"></i>
+                Advanced Analytics Hub
+            </h1>
+            <p style="color: #94a3b8; font-size: 1.1rem;">Comprehensive procurement intelligence and business insights</p>
+        </div>
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <button class="sim-button" id="generate-report-btn">
+                <i class="fas fa-file-alt"></i> Generate Report
+            </button>
+            <button class="sim-button" id="export-data-btn">
+                <i class="fas fa-download"></i> Export Data
+            </button>
+            <button class="sim-button" id="ai-insights-btn">
+                <i class="fas fa-magic"></i> AI Insights
+            </button>
+        </div>
+    </div>
+    <!-- Analytics Filters -->
+    <div class="analytics-filters">
+        <div class="filter-group">
+            <label class="filter-label">Time Period</label>
+            <select class="filter-select" id="time-filter">
+                <option value="7d">Last 7 Days</option>
+                <option value="30d" selected>Last 30 Days</option>
+                <option value="90d">Last 90 Days</option>
+                <option value="1y">Last Year</option>
+                <option value="ytd">Year to Date</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <label class="filter-label">Category</label>
+            <select class="filter-select" id="category-filter">
+                <option value="all">All Categories</option>
+                <option value="it">IT Hardware</option>
+                <option value="software">Software</option>
+                <option value="services">Professional Services</option>
+                <option value="facilities">Facilities</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <label class="filter-label">Supplier</label>
+            <select class="filter-select" id="supplier-filter">
+                <option value="all">All Suppliers</option>
+                <option value="strategic">Strategic Partners</option>
+                <option value="preferred">Preferred Vendors</option>
+                <option value="new">New Suppliers</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <label class="filter-label">Region</label>
+            <select class="filter-select" id="region-filter">
+                <option value="all">Global</option>
+                <option value="na">North America</option>
+                <option value="eu">Europe</option>
+                <option value="apac">Asia Pacific</option>
+            </select>
+        </div>
+    </div>
+    <!-- KPI Dashboard -->
+    <div class="analytics-kpi-grid">
+        <div class="analytics-kpi-card">
+            <div class="kpi-icon" style="background: linear-gradient(45deg, #22c55e, #16a34a);">
+                <i class="fas fa-dollar-sign"></i>
+            </div>
+            <div class="kpi-data">
+                <div class="kpi-value">$47.3M</div>
+                <div class="kpi-label">Total Savings</div>
+                <div class="kpi-trend positive">
+                    <i class="fas fa-arrow-up"></i> +28.4%
+                </div>
+            </div>
+            <div class="kpi-chart">
+                <canvas id="savings-trend-chart" width="80" height="40"></canvas>
+            </div>
+        </div>
+        <div class="analytics-kpi-card">
+            <div class="kpi-icon" style="background: linear-gradient(45deg, #3b82f6, #60a5fa);">
+                <i class="fas fa-shopping-cart"></i>
+            </div>
+            <div class="kpi-data">
+                <div class="kpi-value">$234.7M</div>
+                <div class="kpi-label">Total Spend</div>
+                <div class="kpi-trend positive">
+                    <i class="fas fa-arrow-up"></i> +12.1%
+                </div>
+            </div>
+            <div class="kpi-chart">
+                <canvas id="spend-trend-chart" width="80" height="40"></canvas>
+            </div>
+        </div>
+        <div class="analytics-kpi-card">
+            <div class="kpi-icon" style="background: linear-gradient(45deg, #8b5cf6, #a855f7);">
+                <i class="fas fa-users"></i>
+            </div>
+            <div class="kpi-data">
+                <div class="kpi-value">2,847</div>
+                <div class="kpi-label">Active Suppliers</div>
+                <div class="kpi-trend positive">
+                    <i class="fas fa-arrow-up"></i> +147
+                </div>
+            </div>
+            <div class="kpi-chart">
+                <canvas id="suppliers-trend-chart" width="80" height="40"></canvas>
+            </div>
+        </div>
+        <div class="analytics-kpi-card">
+            <div class="kpi-icon" style="background: linear-gradient(45deg, #f59e0b, #fbbf24);">
+                <i class="fas fa-clock"></i>
+            </div>
+            <div class="kpi-data">
+                <div class="kpi-value">2.3 Days</div>
+                <div class="kpi-label">Avg Cycle Time</div>
+                <div class="kpi-trend negative">
+                    <i class="fas fa-arrow-down"></i> -67%
+                </div>
+            </div>
+            <div class="kpi-chart">
+                <canvas id="cycle-trend-chart" width="80" height="40"></canvas>
+            </div>
+        </div>
+    </div>
+    <!-- Main Analytics Grid -->
+    <div class="analytics-main-grid">
+        <!-- Spend Analysis -->
+        <div class="analytics-card large">
+            <div class="analytics-card-header">
+                <h3 class="analytics-title">
+                    <i class="fas fa-chart-area"></i>
+                    Spend Analysis Overview
+                </h3>
+                <div class="analytics-controls">
+                    <button class="analytics-btn" onclick="drillDown('spend')">
+                        <i class="fas fa-search-plus"></i> Drill Down
+                    </button>
+                </div>
+            </div>
+            <div class="analytics-content">
+                <div class="chart-container">
+                    <canvas id="spend-analysis-chart" width="600" height="300"></canvas>
+                    <div class="chart-placeholder" style="text-align:center; color:#60a5fa; margin-top:1rem;">
+                        <i class="fas fa-chart-bar" style="font-size:2.2rem;"></i>
+                        <div style="color:#94a3b8; font-size:1rem; margin-top:0.3rem;">Spend is highest in IT Hardware and Software this month</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Supplier Performance -->
+        <div class="analytics-card">
+            <div class="analytics-card-header">
+                <h3 class="analytics-title">
+                    <i class="fas fa-star"></i>
+                    Supplier Performance
+                </h3>
+            </div>
+            <div class="analytics-content">
+                <div class="supplier-performance-list">
+                    <div class="supplier-item">
+                        <div class="supplier-info">
+                            <div class="supplier-name">TechCorp Solutions</div>
+                            <div class="supplier-category">IT Hardware</div>
+                        </div>
+                        <div class="supplier-score">
+                            <div class="score-circle" style="--score: 94;">
+                                <span>94%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="supplier-item">
+                        <div class="supplier-info">
+                            <div class="supplier-name">CloudFirst Inc</div>
+                            <div class="supplier-category">Software</div>
+                        </div>
+                        <div class="supplier-score">
+                            <div class="score-circle" style="--score: 91;">
+                                <span>91%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="supplier-item">
+                        <div class="supplier-info">
+                            <div class="supplier-name">Global Services Ltd</div>
+                            <div class="supplier-category">Professional Services</div>
+                        </div>
+                        <div class="supplier-score">
+                            <div class="score-circle" style="--score: 88;">
+                                <span>88%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="supplier-item">
+                        <div class="supplier-info">
+                            <div class="supplier-name">FacilityPro Corp</div>
+                            <div class="supplier-category">Facilities</div>
+                        </div>
+                        <div class="supplier-score">
+                            <div class="score-circle" style="--score: 85;">
+                                <span>85%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Cost Savings Trends -->
+        <div class="analytics-card">
+            <div class="analytics-card-header">
+                <h3 class="analytics-title">
+                    <i class="fas fa-piggy-bank"></i>
+                    Cost Savings Trends
+                </h3>
+            </div>
+            <div class="analytics-content">
+                <div class="chart-container">
+                    <canvas id="savings-trends-chart" width="400" height="250"></canvas>
+                    <div class="chart-placeholder" style="text-align:center; color:#22c55e; margin-top:1rem;">
+                        <i class="fas fa-signal" style="font-size:2.2rem;"></i>
+                        <div style="color:#94a3b8; font-size:1rem; margin-top:0.3rem;">Savings peaked on Thursday and Saturday</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Risk Assessment -->
+        <div class="analytics-card">
+            <div class="analytics-card-header">
+                <h3 class="analytics-title">
+                    <i class="fas fa-shield-alt"></i>
+                    Risk Assessment Matrix
+                </h3>
+            </div>
+            <div class="analytics-content">
+                <div class="risk-matrix">
+                    <div class="risk-item low">
+                        <div class="risk-category">Financial Risk</div>
+                        <div class="risk-score">Low</div>
+                        <div class="risk-value">2.1/10</div>
+                    </div>
+                    <div class="risk-item medium">
+                        <div class="risk-category">Operational Risk</div>
+                        <div class="risk-score">Medium</div>
+                        <div class="risk-value">4.7/10</div>
+                    </div>
+                    <div class="risk-item low">
+                        <div class="risk-category">Compliance Risk</div>
+                        <div class="risk-score">Low</div>
+                        <div class="risk-value">1.8/10</div>
+                    </div>
+                    <div class="risk-item low">
+                        <div class="risk-category">Supplier Risk</div>
+                        <div class="risk-score">Low</div>
+                        <div class="risk-value">3.2/10</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Category Breakdown -->
+        <div class="analytics-card">
+            <div class="analytics-card-header">
+                <h3 class="analytics-title">
+                    <i class="fas fa-chart-pie"></i>
+                    Spend by Category
+                </h3>
+            </div>
+            <div class="analytics-content">
+                <div class="chart-container">
+                    <canvas id="category-pie-chart" width="300" height="300"></canvas>
+                    <div class="chart-placeholder" style="text-align:center; color:#60a5fa; margin-top:1rem;">
+                        <i class="fas fa-chart-bar" style="font-size:2.2rem;"></i>
+                        <div style="color:#94a3b8; font-size:1rem; margin-top:0.3rem;">Spend is highest in IT Hardware and Software this month</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- AI Predictions -->
+        <div class="analytics-card">
+            <div class="analytics-card-header">
+                <h3 class="analytics-title">
+                    <i class="fas fa-crystal-ball"></i>
+                    AI Predictions
+                </h3>
+            </div>
+            <div class="analytics-content">
+                <div class="prediction-list">
+                    <div class="prediction-item">
+                        <div class="prediction-icon">
+                            <i class="fas fa-arrow-up" style="color: #22c55e;"></i>
+                        </div>
+                        <div class="prediction-content">
+                            <div class="prediction-title">Q2 Spend Forecast</div>
+                            <div class="prediction-value">+15.3% increase</div>
+                            <div class="prediction-confidence">94% confidence</div>
+                        </div>
+                    </div>
+                    <div class="prediction-item">
+                        <div class="prediction-icon">
+                            <i class="fas fa-exclamation-triangle" style="color: #f59e0b;"></i>
+                        </div>
+                        <div class="prediction-content">
+                            <div class="prediction-title">Supplier Risk Alert</div>
+                            <div class="prediction-value">3 suppliers at risk</div>
+                            <div class="prediction-confidence">87% confidence</div>
+                        </div>
+                    </div>
+                    <div class="prediction-item">
+                        <div class="prediction-icon">
+                            <i class="fas fa-dollar-sign" style="color: #3b82f6;"></i>
+                        </div>
+                        <div class="prediction-content">
+                            <div class="prediction-title">Savings Opportunity</div>
+                            <div class="prediction-value">$2.8M potential</div>
+                            <div class="prediction-confidence">91% confidence</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Contract Analytics -->
+        <div class="analytics-card large">
+            <div class="analytics-card-header">
+                <h3 class="analytics-title">
+                    <i class="fas fa-file-contract"></i>
+                    Contract Performance Analytics
+                </h3>
+                <div class="analytics-controls">
+                    <button class="analytics-btn" onclick="viewContractDetails()">
+                        <i class="fas fa-eye"></i> View Details
+                    </button>
+                </div>
+            </div>
+            <div class="analytics-content">
+                <div class="contract-metrics-grid">
+                    <div class="contract-metric">
+                        <div class="metric-icon">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <div class="metric-data">
+                            <div class="metric-value">1,294</div>
+                            <div class="metric-label">Active Contracts</div>
+                        </div>
+                    </div>
+                    <div class="contract-metric">
+                        <div class="metric-icon">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <div class="metric-data">
+                            <div class="metric-value">47</div>
+                            <div class="metric-label">Expiring Soon</div>
+                        </div>
+                    </div>
+                    <div class="contract-metric">
+                        <div class="metric-icon">
+                            <i class="fas fa-percentage"></i>
+                        </div>
+                        <div class="metric-data">
+                            <div class="metric-value">94.7%</div>
+                            <div class="metric-label">Compliance Rate</div>
+                        </div>
+                    </div>
+                    <div class="contract-metric">
+                        <div class="metric-icon">
+                            <i class="fas fa-coins"></i>
+                        </div>
+                        <div class="metric-data">
+                            <div class="metric-value">$8.7M</div>
+                            <div class="metric-label">Value Optimized</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="contract-timeline-chart" width="600" height="200"></canvas>
+                    <div class="chart-placeholder" style="text-align:center; color:#3b82f6; margin-top:1rem;">
+                        <i class="fas fa-stream" style="font-size:2.2rem;"></i>
+                        <div style="color:#94a3b8; font-size:1rem; margin-top:0.3rem;">Most contracts renewed in Q2, compliance rate at 94.7%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Procurement Velocity -->
+        <div class="analytics-card">
+            <div class="analytics-card-header">
+                <h3 class="analytics-title">
+                    <i class="fas fa-tachometer-alt"></i>
+                    Procurement Velocity
+                </h3>
+            </div>
+            <div class="analytics-content">
+                <div class="velocity-metrics">
+                    <div class="velocity-item">
+                        <div class="velocity-stage">Sourcing</div>
+                        <div class="velocity-time">1.2 days</div>
+                        <div class="velocity-improvement">-78%</div>
+                    </div>
+                    <div class="velocity-item">
+                        <div class="velocity-stage">Contracting</div>
+                        <div class="velocity-time">0.8 days</div>
+                        <div class="velocity-improvement">-85%</div>
+                    </div>
+                    <div class="velocity-item">
+                        <div class="velocity-stage">Approval</div>
+                        <div class="velocity-time">0.3 days</div>
+                        <div class="velocity-improvement">-92%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Market Intelligence -->
+        <div class="analytics-card">
+            <div class="analytics-card-header">
+                <h3 class="analytics-title">
+                    <i class="fas fa-globe"></i>
+                    Market Intelligence
+                </h3>
+            </div>
+            <div class="analytics-content">
+                <div class="market-insights">
+                    <div class="market-item">
+                        <div class="market-category">IT Hardware</div>
+                        <div class="market-trend down">
+                            <i class="fas fa-arrow-down"></i> -12%
+                        </div>
+                        <div class="market-note">Favorable buying conditions</div>
+                    </div>
+                    <div class="market-item">
+                        <div class="market-category">Software Licenses</div>
+                        <div class="market-trend up">
+                            <i class="fas fa-arrow-up"></i> +8%
+                        </div>
+                        <div class="market-note">Price increases expected</div>
+                    </div>
+                    <div class="market-item">
+                        <div class="market-category">Cloud Services</div>
+                        <div class="market-trend stable">
+                            <i class="fas fa-minus"></i> 0%
+                        </div>
+                        <div class="market-note">Market stable, good timing</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Quality Metrics -->
+        <div class="analytics-card">
+            <div class="analytics-card-header">
+                <h3 class="analytics-title">
+                    <i class="fas fa-award"></i>
+                    Quality Metrics
+                </h3>
+            </div>
+            <div class="analytics-content">
+                <div class="quality-dashboard">
+                    <div class="quality-metric">
+                        <div class="quality-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="quality-data">
+                            <div class="quality-value">99.2%</div>
+                            <div class="quality-label">Delivery Success</div>
+                        </div>
+                    </div>
+                    <div class="quality-metric">
+                        <div class="quality-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="quality-data">
+                            <div class="quality-value">4.8/5</div>
+                            <div class="quality-label">Avg Quality Score</div>
+                        </div>
+                    </div>
+                    <div class="quality-metric">
+                        <div class="quality-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="quality-data">
+                            <div class="quality-value">0.8%</div>
+                            <div class="quality-label">Defect Rate</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Compliance Dashboard -->
+        <div class="analytics-card">
+            <div class="analytics-card-header">
+                <h3 class="analytics-title">
+                    <i class="fas fa-clipboard-check"></i>
+                    Compliance Dashboard
+                </h3>
+            </div>
+            <div class="analytics-content">
+                <div class="compliance-metrics">
+                    <div class="compliance-item">
+                        <div class="compliance-type">SOX Compliance</div>
+                        <div class="compliance-status compliant">
+                            <i class="fas fa-check"></i> 100%
+                        </div>
+                    </div>
+                    <div class="compliance-item">
+                        <div class="compliance-type">GDPR Compliance</div>
+                        <div class="compliance-status compliant">
+                            <i class="fas fa-check"></i> 98.7%
+                        </div>
+                    </div>
+                    <div class="compliance-item">
+                        <div class="compliance-type">ISO 9001</div>
+                        <div class="compliance-status warning">
+                            <i class="fas fa-exclamation"></i> 94.2%
+                        </div>
+                    </div>
+                    <div class="compliance-item">
+                        <div class="compliance-type">Industry Standards</div>
+                        <div class="compliance-status compliant">
+                            <i class="fas fa-check"></i> 97.1%
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Environmental Impact -->
+        <div class="analytics-card">
+            <div class="analytics-card-header">
+                <h3 class="analytics-title">
+                    <i class="fas fa-leaf"></i>
+                    Environmental Impact
+                </h3>
+            </div>
+            <div class="analytics-content">
+                <div class="environmental-metrics">
+                    <div class="env-metric">
+                        <div class="env-icon">
+                            <i class="fas fa-seedling"></i>
+                        </div>
+                        <div class="env-data">
+                            <div class="env-value">847 tons</div>
+                            <div class="env-label">CO₂ Reduced</div>
+                        </div>
+                    </div>
+                    <div class="env-metric">
+                        <div class="env-icon">
+                            <i class="fas fa-recycle"></i>
+                        </div>
+                        <div class="env-data">
+                            <div class="env-value">73%</div>
+                            <div class="env-label">Sustainable Suppliers</div>
+                        </div>
+                    </div>
+                    <div class="env-metric">
+                        <div class="env-icon">
+                            <i class="fas fa-award"></i>
+                        </div>
+                        <div class="env-data">
+                            <div class="env-value">A+</div>
+                            <div class="env-label">ESG Rating</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Regional Performance -->
+        <div class="analytics-card large">
+            <div class="analytics-card-header">
+                <h3 class="analytics-title">
+                    <i class="fas fa-map-marked-alt"></i>
+                    Regional Performance Analysis
+                </h3>
+            </div>
+            <div class="analytics-content">
+                <div class="regional-grid">
+                    <div class="region-card">
+                        <div class="region-header">
+                            <div class="region-name">North America</div>
+                            <div class="region-percentage">42%</div>
+                        </div>
+                        <div class="region-metrics">
+                            <div class="region-metric">
+                                <span>Spend:</span> $98.7M
+                            </div>
+                            <div class="region-metric">
+                                <span>Savings:</span> $19.2M
+                            </div>
+                            <div class="region-metric">
+                                <span>Suppliers:</span> 1,247
+                            </div>
+                        </div>
+                    </div>
+                    <div class="region-card">
+                        <div class="region-header">
+                            <div class="region-name">Europe</div>
+                            <div class="region-percentage">35%</div>
+                        </div>
+                        <div class="region-metrics">
+                            <div class="region-metric">
+                                <span>Spend:</span> $82.1M
+                            </div>
+                            <div class="region-metric">
+                                <span>Savings:</span> $16.8M
+                            </div>
+                            <div class="region-metric">
+                                <span>Suppliers:</span> 894
+                            </div>
+                        </div>
+                    </div>
+                    <div class="region-card">
+                        <div class="region-header">
+                            <div class="region-name">Asia Pacific</div>
+                            <div class="region-percentage">23%</div>
+                        </div>
+                        <div class="region-metrics">
+                            <div class="region-metric">
+                                <span>Spend:</span> $53.9M
+                            </div>
+                            <div class="region-metric">
+                                <span>Savings:</span> $11.3M
+                            </div>
+                            <div class="region-metric">
+                                <span>Suppliers:</span> 706
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

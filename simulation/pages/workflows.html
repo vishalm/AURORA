@@ -1,0 +1,304 @@
+<div id="workflows-page">
+<!-- Workflows Page Header -->
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+    <div>
+        <h1 style="font-size: 2rem; font-weight: 700; color: #f1f5f9; margin-bottom: 0.5rem;">
+            <i class="fas fa-sitemap" style="color: #60a5fa; margin-right: 0.5rem;"></i>
+            Workflow Management Center
+        </h1>
+        <p style="color: #94a3b8; font-size: 1.1rem;">Design, deploy, and monitor intelligent procurement workflows</p>
+    </div>
+    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+        <button class="sim-button" id="create-workflow-btn">
+            <i class="fas fa-plus"></i> Create Workflow
+        </button>
+        <button class="sim-button" id="workflow-templates-btn">
+            <i class="fas fa-layer-group"></i> Templates
+        </button>
+        <button class="sim-button" id="workflow-analytics-btn">
+            <i class="fas fa-chart-line"></i> Analytics
+        </button>
+    </div>
+</div>
+
+<!-- Workflow Overview Stats -->
+<div class="workflow-overview-grid">
+    <div class="workflow-stat-card">
+        <div class="stat-icon" style="background: linear-gradient(45deg, #22c55e, #16a34a);">
+            <i class="fas fa-play"></i>
+        </div>
+        <div class="stat-content">
+            <div class="stat-number">47</div>
+            <div class="stat-label">Active Workflows</div>
+            <div class="stat-trend">+8 this month</div>
+        </div>
+    </div>
+    <div class="workflow-stat-card">
+        <div class="stat-icon" style="background: linear-gradient(45deg, #3b82f6, #60a5fa);">
+            <i class="fas fa-clock"></i>
+        </div>
+        <div class="stat-content">
+            <div class="stat-number">89%</div>
+            <div class="stat-label">Automation Rate</div>
+            <div class="stat-trend">+15% improvement</div>
+        </div>
+    </div>
+    <div class="workflow-stat-card">
+        <div class="stat-icon" style="background: linear-gradient(45deg, #8b5cf6, #a855f7);">
+            <i class="fas fa-stopwatch"></i>
+        </div>
+        <div class="stat-content">
+            <div class="stat-number">3.2h</div>
+            <div class="stat-label">Avg Completion</div>
+            <div class="stat-trend">-67% vs manual</div>
+        </div>
+    </div>
+    <div class="workflow-stat-card">
+        <div class="stat-icon" style="background: linear-gradient(45deg, #f59e0b, #fbbf24);">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <div class="stat-content">
+            <div class="stat-number">97.8%</div>
+            <div class="stat-label">Success Rate</div>
+            <div class="stat-trend">+2.1% this quarter</div>
+        </div>
+    </div>
+</div>
+
+<!-- Visual Workflow Builder -->
+<div class="workflow-builder-container">
+    <div class="workflow-builder-header">
+        <h2 class="section-title">
+            <i class="fas fa-project-diagram" style="color: #60a5fa; margin-right: 0.5rem;"></i>
+            Visual Workflow Builder
+        </h2>
+        <div class="builder-controls">
+            <button class="workflow-action-btn" id="save-workflow">
+                <i class="fas fa-save"></i> Save
+            </button>
+            <button class="workflow-action-btn" id="test-workflow">
+                <i class="fas fa-play"></i> Test Run
+            </button>
+            <button class="workflow-action-btn primary" id="deploy-workflow">
+                <i class="fas fa-rocket"></i> Deploy
+            </button>
+        </div>
+    </div>
+    <div class="workflow-builder-workspace">
+        <!-- Workflow Palette -->
+        <div class="workflow-palette">
+            <h4 style="color: #f1f5f9; margin-bottom: 1rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px;">Workflow Components</h4>
+            <div class="palette-category">
+                <div class="palette-category-title"><i class="fas fa-play-circle"></i> Triggers</div>
+                <div class="palette-items">
+                    <div class="palette-item" draggable="true" data-type="trigger" data-subtype="request"><i class="fas fa-bell"></i><span>Purchase Request</span></div>
+                    <div class="palette-item" draggable="true" data-type="trigger" data-subtype="schedule"><i class="fas fa-calendar"></i><span>Scheduled</span></div>
+                    <div class="palette-item" draggable="true" data-type="trigger" data-subtype="approval"><i class="fas fa-user-check"></i><span>Approval</span></div>
+                </div>
+            </div>
+            <div class="palette-category">
+                <div class="palette-category-title"><i class="fas fa-robot"></i> AI Actions</div>
+                <div class="palette-items">
+                    <div class="palette-item" draggable="true" data-type="ai" data-subtype="aria"><i class="fas fa-search"></i><span>ARIA Analysis</span></div>
+                    <div class="palette-item" draggable="true" data-type="ai" data-subtype="alex"><i class="fas fa-file-contract"></i><span>ALEX Review</span></div>
+                    <div class="palette-item" draggable="true" data-type="ai" data-subtype="apollo"><i class="fas fa-shopping-cart"></i><span>APOLLO Purchase</span></div>
+                    <div class="palette-item" draggable="true" data-type="ai" data-subtype="atlas"><i class="fas fa-eye"></i><span>ATLAS Inspect</span></div>
+                    <div class="palette-item" draggable="true" data-type="ai" data-subtype="archer"><i class="fas fa-shield-alt"></i><span>ARCHER Validate</span></div>
+                </div>
+            </div>
+            <div class="palette-category">
+                <div class="palette-category-title"><i class="fas fa-cogs"></i> Logic</div>
+                <div class="palette-items">
+                    <div class="palette-item" draggable="true" data-type="logic" data-subtype="condition"><i class="fas fa-code-branch"></i><span>Condition</span></div>
+                    <div class="palette-item" draggable="true" data-type="logic" data-subtype="loop"><i class="fas fa-redo"></i><span>Loop</span></div>
+                    <div class="palette-item" draggable="true" data-type="logic" data-subtype="delay"><i class="fas fa-pause"></i><span>Delay</span></div>
+                </div>
+            </div>
+            <div class="palette-category">
+                <div class="palette-category-title"><i class="fas fa-paper-plane"></i> Actions</div>
+                <div class="palette-items">
+                    <div class="palette-item" draggable="true" data-type="action" data-subtype="email"><i class="fas fa-envelope"></i><span>Send Email</span></div>
+                    <div class="palette-item" draggable="true" data-type="action" data-subtype="webhook"><i class="fas fa-link"></i><span>Webhook</span></div>
+                    <div class="palette-item" draggable="true" data-type="action" data-subtype="update"><i class="fas fa-database"></i><span>Update Record</span></div>
+                </div>
+            </div>
+        </div>
+        <!-- Workflow Canvas -->
+        <div class="workflow-canvas" id="workflow-canvas-builder">
+            <div class="canvas-header">
+                <div class="canvas-title">Emergency Procurement Workflow</div>
+                <div class="canvas-controls">
+                    <button class="canvas-control-btn" id="zoom-out"><i class="fas fa-search-minus"></i></button>
+                    <span class="zoom-level">100%</span>
+                    <button class="canvas-control-btn" id="zoom-in"><i class="fas fa-search-plus"></i></button>
+                    <button class="canvas-control-btn" id="center-canvas"><i class="fas fa-compress-arrows-alt"></i></button>
+                </div>
+            </div>
+            <div class="canvas-workspace" id="canvas-workspace">
+                <!-- Sample workflow nodes -->
+                <div class="workflow-node start-node" style="top: 50px; left: 100px;" data-node-id="start">
+                    <div class="node-header"><i class="fas fa-play"></i><span>Start: Purchase Request</span></div>
+                    <div class="node-content"><div class="node-field">Amount: > $10,000</div><div class="node-field">Category: IT Hardware</div></div>
+                    <div class="node-connector output" data-direction="output"></div>
+                </div>
+                <div class="workflow-node ai-node" style="top: 200px; left: 100px;" data-node-id="aria-analysis">
+                    <div class="node-header aria"><i class="fas fa-search"></i><span>ARIA: Market Analysis</span></div>
+                    <div class="node-content"><div class="node-field">Supplier Discovery</div><div class="node-field">Price Benchmarking</div><div class="node-status">Processing: 1.2s</div></div>
+                    <div class="node-connector input" data-direction="input"></div>
+                    <div class="node-connector output" data-direction="output"></div>
+                </div>
+                <div class="workflow-node logic-node" style="top: 350px; left: 100px;" data-node-id="approval-check">
+                    <div class="node-header"><i class="fas fa-code-branch"></i><span>Approval Required?</span></div>
+                    <div class="node-content"><div class="node-field">Amount > $50,000</div><div class="node-field">High Risk Category</div></div>
+                    <div class="node-connector input" data-direction="input"></div>
+                    <div class="node-connector output yes" data-direction="output" data-condition="yes"></div>
+                    <div class="node-connector output no" data-direction="output" data-condition="no"></div>
+                </div>
+                <div class="workflow-node ai-node" style="top: 350px; left: 400px;" data-node-id="apollo-purchase">
+                    <div class="node-header apollo"><i class="fas fa-shopping-cart"></i><span>APOLLO: Execute Purchase</span></div>
+                    <div class="node-content"><div class="node-field">Optimal Supplier: TechCorp</div><div class="node-field">Expected Savings: $12,500</div><div class="node-status">Ready to Execute</div></div>
+                    <div class="node-connector input" data-direction="input"></div>
+                    <div class="node-connector output" data-direction="output"></div>
+                </div>
+                <div class="workflow-node action-node" style="top: 500px; left: 400px;" data-node-id="send-notification">
+                    <div class="node-header"><i class="fas fa-envelope"></i><span>Send Confirmation</span></div>
+                    <div class="node-content"><div class="node-field">To: Requestor, Finance</div><div class="node-field">Template: Purchase Completed</div></div>
+                    <div class="node-connector input" data-direction="input"></div>
+                </div>
+                <!-- Workflow connections -->
+                <svg class="workflow-connections" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1;">
+                    <defs>
+                        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                            <polygon points="0 0, 10 3.5, 0 7" fill="#60a5fa" />
+                        </marker>
+                    </defs>
+                    <!-- Start to ARIA -->
+                    <path d="M 150 120 Q 150 160 150 180" stroke="#60a5fa" stroke-width="2" fill="none" marker-end="url(#arrowhead)" class="connection-line" />
+                    <!-- ARIA to Approval Check -->
+                    <path d="M 150 270 Q 150 310 150 330" stroke="#60a5fa" stroke-width="2" fill="none" marker-end="url(#arrowhead)" class="connection-line" />
+                    <!-- Approval Check to APOLLO (No path) -->
+                    <path d="M 200 380 Q 300 380 380 380" stroke="#22c55e" stroke-width="2" fill="none" marker-end="url(#arrowhead)" class="connection-line" />
+                    <!-- APOLLO to Send Notification -->
+                    <path d="M 450 420 Q 450 460 450 480" stroke="#60a5fa" stroke-width="2" fill="none" marker-end="url(#arrowhead)" class="connection-line" />
+                </svg>
+            </div>
+        </div>
+        <!-- Workflow Properties Panel -->
+        <div class="workflow-properties" id="workflow-properties">
+            <h4 style="color: #f1f5f9; margin-bottom: 1rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px;">Node Properties</h4>
+            <div class="properties-content" id="properties-content">
+                <div class="property-group">
+                    <label class="property-label">Node Name</label>
+                    <input type="text" class="property-input" value="Emergency Procurement Start" />
+                </div>
+                <div class="property-group">
+                    <label class="property-label">Description</label>
+                    <textarea class="property-input" rows="3">Triggers when a purchase request over $10,000 is submitted for IT hardware</textarea>
+                </div>
+                <div class="property-group">
+                    <label class="property-label">Conditions</label>
+                    <div class="condition-builder">
+                        <div class="condition-row">
+                            <select class="condition-field">
+                                <option>Amount</option>
+                                <option>Category</option>
+                                <option>Urgency</option>
+                            </select>
+                            <select class="condition-operator">
+                                <option>></option>
+                                <option>=</option>
+                                <option><</option>
+                                <option>contains</option>
+                            </select>
+                            <input type="text" class="condition-value" value="10000" />
+                        </div>
+                        <button class="add-condition-btn"><i class="fas fa-plus"></i> Add Condition</button>
+                    </div>
+                </div>
+                <div class="property-group">
+                    <label class="property-label">AI Agent Settings</label>
+                    <div class="agent-settings">
+                        <div class="setting-row">
+                            <label>Confidence Threshold</label>
+                            <input type="range" min="0.1" max="1.0" step="0.1" value="0.9" class="confidence-slider" />
+                            <span class="confidence-value">90%</span>
+                        </div>
+                        <div class="setting-row">
+                            <label>Timeout (seconds)</label>
+                            <input type="number" value="300" class="timeout-input" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Existing Workflows Grid -->
+<div class="existing-workflows-section">
+    <div class="section-header">
+        <h2 class="section-title">
+            <i class="fas fa-folder-open" style="color: #60a5fa; margin-right: 0.5rem;"></i>
+            Active Workflows
+        </h2>
+        <div class="workflow-filters">
+            <select class="filter-select">
+                <option>All Categories</option>
+                <option>Emergency Procurement</option>
+                <option>Supplier Onboarding</option>
+                <option>Contract Management</option>
+                <option>Quality Control</option>
+            </select>
+            <select class="filter-select">
+                <option>All Status</option>
+                <option>Active</option>
+                <option>Draft</option>
+                <option>Suspended</option>
+            </select>
+        </div>
+    </div>
+    <div class="workflows-grid">
+        <div class="workflow-card active" data-workflow="emergency-procurement">
+            <div class="workflow-card-header">
+                <div class="workflow-icon emergency"><i class="fas fa-bolt"></i></div>
+                <div class="workflow-status active">Active</div>
+            </div>
+            <div class="workflow-card-content">
+                <h3>Emergency Procurement</h3>
+                <p>Fast-track procurement for urgent business needs with automated approvals</p>
+                <div class="workflow-stats">
+                    <div class="stat"><span class="stat-label">Executions</span><span class="stat-value">247</span></div>
+                    <div class="stat"><span class="stat-label">Success Rate</span><span class="stat-value">98.7%</span></div>
+                    <div class="stat"><span class="stat-label">Avg Time</span><span class="stat-value">2.3h</span></div>
+                </div>
+            </div>
+            <div class="workflow-card-actions">
+                <button class="workflow-btn" onclick="viewWorkflow('emergency-procurement')"><i class="fas fa-eye"></i> View</button>
+                <button class="workflow-btn" onclick="editWorkflow('emergency-procurement')"><i class="fas fa-edit"></i> Edit</button>
+                <button class="workflow-btn" onclick="runWorkflow('emergency-procurement')"><i class="fas fa-play"></i> Run</button>
+            </div>
+        </div>
+        <div class="workflow-card active" data-workflow="supplier-onboarding">
+            <div class="workflow-card-header">
+                <div class="workflow-icon supplier"><i class="fas fa-handshake"></i></div>
+                <div class="workflow-status active">Active</div>
+            </div>
+            <div class="workflow-card-content">
+                <h3>Supplier Onboarding</h3>
+                <p>Comprehensive supplier validation and integration process</p>
+                <div class="workflow-stats">
+                    <div class="stat"><span class="stat-label">Executions</span><span class="stat-value">189</span></div>
+                    <div class="stat"><span class="stat-label">Success Rate</span><span class="stat-value">97.2%</span></div>
+                    <div class="stat"><span class="stat-label">Avg Time</span><span class="stat-value">3.1h</span></div>
+                </div>
+            </div>
+            <div class="workflow-card-actions">
+                <button class="workflow-btn" onclick="viewWorkflow('supplier-onboarding')"><i class="fas fa-eye"></i> View</button>
+                <button class="workflow-btn" onclick="editWorkflow('supplier-onboarding')"><i class="fas fa-edit"></i> Edit</button>
+                <button class="workflow-btn" onclick="runWorkflow('supplier-onboarding')"><i class="fas fa-play"></i> Run</button>
+            </div>
+        </div>
+        <!-- Add more workflow cards as needed -->
+    </div>
+</div>
+</div> 

@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Workflow Simulation Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            color: #f1f5f9;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        
+        #dashboard-page {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        /* KPI Grid Styles */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        
+        .kpi-card {
+            background: linear-gradient(145deg, #1e293b, #334155);
+            border: 1px solid #475569;
+            border-radius: 16px;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .kpi-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(34, 197, 94, 0.1), rgba(59, 130, 246, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .kpi-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .kpi-card:hover::before {
+            opacity: 1;
+        }
+        
+        .kpi-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .kpi-title {
+            font-size: 0.9rem;
+            color: #cbd5e1;
+            font-weight: 500;
+        }
+        
+        .kpi-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #f1f5f9;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .kpi-change {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .change-positive {
+            color: #22c55e;
+        }
+        
+        .kpi-subvalue {
+            color: #fbbf24;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 0.3rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Workflow Simulation Styles */
+        .workflow-simulation-section {
+            margin-top: 3rem;
+            background: linear-gradient(145deg, #1e293b, #334155);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid #475569;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .workflow-simulation-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        
+        .workflow-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .workflow-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #f1f5f9;
+            display: flex;
+            align-items: center;
+        }
+        
+        .simulation-controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        .sim-button {
+            background: linear-gradient(145deg, #3b82f6, #2563eb);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            padding: 0.75rem 1.25rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .sim-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.3s ease;
+        }
+        
+        .sim-button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .sim-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
+        }
+        
+        .sim-button.primary {
+            background: linear-gradient(145deg, #22c55e, #16a34a);
+        }
+        
+        .sim-button.primary:hover {
+            box-shadow: 0 10px 25px rgba(34, 197, 94, 0.4);
+        }
+        
+        .scenario-btn {
+            background: linear-gradient(145deg, #8b5cf6, #7c3aed);
+        }
+        
+        .scenario-btn:hover {
+            box-shadow: 0 10px 25px rgba(139, 92, 246, 0.4);
+        }
+        
+        .scenario-btn.active {
+            background: linear-gradient(145deg, #7c3aed, #6d28d9);
+            box-shadow: 0 10px 25px rgba(139, 92, 246, 0.6);
+            transform: translateY(-2px);
+        }
+        
+        /* Scenario Headers */
+        .scenario-header {
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .scenario-header h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #f1f5f9;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .scenario-header p {
+            color: #94a3b8;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        
+        /* Emergency Workflow Specific Styles */
+        .emergency-step {
+            border-color: #ef4444;
+        }
+        
+        .emergency-step .step-number {
+            background: linear-gradient(145deg, #ef4444, #dc2626);
+            box-shadow: 0 8px 20px rgba(239, 68, 68, 0.4);
+        }
+        
+        .emergency-step .step-agent {
+            color: #f87171;
+        }
+        
+        .emergency-step .step-timing div {
+            background: linear-gradient(145deg, #ef4444, #dc2626);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
+        
+        .emergency-step:hover {
+            border-color: #f87171;
+            box-shadow: 0 20px 40px rgba(239, 68, 68, 0.3);
+        }
+        
+        .emergency-step.active {
+            border-color: #fbbf24;
+            background: linear-gradient(145deg, #451a03, #92400e);
+        }
+        
+        .emergency-step.active .step-number {
+            background: linear-gradient(145deg, #fbbf24, #f59e0b);
+        }
+        
+        .emergency-step.completed {
+            border-color: #22c55e;
+            background: linear-gradient(145deg, #064e3b, #166534);
+        }
+        
+        .emergency-step.completed .step-number {
+            background: linear-gradient(145deg, #22c55e, #16a34a);
+        }
+        
+        /* Enhanced Workflow Canvas */
+        .workflow-canvas {
+            position: relative;
+            z-index: 2;
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid #475569;
+            backdrop-filter: blur(10px);
+        }
+        
+        .workflow-horizontal-canvas {
+            width: 100%;
+        }
+        
+        .workflow-swimlane {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        
+        .workflow-swimlane-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        /* Enhanced Workflow Steps */
+        .workflow-step {
+            background: linear-gradient(145deg, #1e293b, #334155);
+            border: 2px solid #475569;
+            border-radius: 20px;
+            padding: 1.5rem;
+            min-width: 180px;
+            max-width: 220px;
+            text-align: center;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            overflow: hidden;
+        }
+        
+        .workflow-step::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(145deg, transparent, rgba(59, 130, 246, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .workflow-step:hover {
+            transform: translateY(-8px) scale(1.05);
+            border-color: #60a5fa;
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.3);
+        }
+        
+        .workflow-step:hover::before {
+            opacity: 1;
+        }
+        
+        .step-number {
+            width: 3rem;
+            height: 3rem;
+            background: linear-gradient(145deg, #3b82f6, #2563eb);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin: 0 auto 1rem;
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .step-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #f1f5f9;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .step-agent {
+            font-size: 1rem;
+            color: #60a5fa;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .step-timing {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .step-timing div {
+            background: linear-gradient(145deg, #22c55e, #16a34a);
+            color: white;
+            padding: 0.4rem 0.8rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-block;
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+        }
+        
+        /* Active and Completed States */
+        .workflow-step.active {
+            border-color: #fbbf24;
+            background: linear-gradient(145deg, #451a03, #92400e);
+            transform: scale(1.1);
+            box-shadow: 0 0 30px rgba(251, 191, 36, 0.5);
+            animation: pulse 2s infinite;
+        }
+        
+        .workflow-step.active .step-number {
+            background: linear-gradient(145deg, #fbbf24, #f59e0b);
+            animation: spin 2s linear infinite;
+        }
+        
+        .workflow-step.active .step-timing div {
+            background: linear-gradient(145deg, #fbbf24, #f59e0b);
+            animation: glow 1s ease-in-out infinite alternate;
+        }
+        
+        .workflow-step.completed {
+            border-color: #22c55e;
+            background: linear-gradient(145deg, #064e3b, #166534);
+            transform: scale(1.02);
+        }
+        
+        .workflow-step.completed .step-number {
+            background: linear-gradient(145deg, #22c55e, #16a34a);
+        }
+        
+        .workflow-step.completed::after {
+            content: '✓';
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: #22c55e;
+            color: white;
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+            z-index: 3;
+        }
+        
+        /* Spacers */
+        .workflow-swimlane-spacer {
+            min-width: 180px;
+            max-width: 220px;
+        }
+        
+        /* Tooltips */
+        .tooltip {
+            position: absolute;
+            bottom: -3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+        
+        .workflow-step:hover .tooltip {
+            opacity: 1;
+            visibility: visible;
+            bottom: -2.5rem;
+        }
+        
+        /* Animations */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1.1); }
+            50% { transform: scale(1.15); }
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        @keyframes glow {
+            from { box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3); }
+            to { box-shadow: 0 4px 20px rgba(251, 191, 36, 0.6); }
+        }
+        
+        /* Chart Styles */
+        .dashboard-chart-container {
+            background: linear-gradient(145deg, #1e293b, #334155);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-top: 2rem;
+            border: 1px solid #475569;
+        }
+        
+        .chart-bars {
+            display: flex;
+            align-items: end;
+            gap: 1rem;
+            height: 200px;
+            margin: 1rem 0;
+        }
+        
+        .chart-bar {
+            flex: 1;
+            background: linear-gradient(to top, #22c55e, #16a34a);
+            border-radius: 8px 8px 0 0;
+            position: relative;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .chart-bar:hover {
+            transform: scaleY(1.1);
+            box-shadow: 0 0 20px rgba(34, 197, 94, 0.5);
+        }
+        
+        .chart-bar::before {
+            content: attr(data-value);
+            position: absolute;
+            top: -2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #f1f5f9;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .chart-bar::after {
+            content: attr(data-day);
+            position: absolute;
+            bottom: -1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #94a3b8;
+            font-size: 0.8rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .workflow-header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: stretch;
+            }
+            
+            .simulation-controls {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .workflow-swimlane-row {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .workflow-step {
+                min-width: 200px;
+                max-width: 280px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="dashboard-page">
+        <!-- KPI Grid -->
+        <div class="kpi-grid">
+            <div class="kpi-card" data-tooltip="Total annual savings achieved through AI optimization">
+                <div class="kpi-header">
+                    <span class="kpi-title">Annual Savings</span>
+                    <i class="fas fa-dollar-sign" style="color: #22c55e;"></i>
+                </div>
+                <div class="kpi-value" id="annual-savings">$47.3M</div>
+                <div class="kpi-change change-positive">
+                    <i class="fas fa-arrow-up"></i>
+                    <span>+28.4% vs last year</span>
+                </div>
+            </div>
+            <div class="kpi-card" data-tooltip="Average time to complete sourcing cycles">
+                <div class="kpi-header">
+                    <span class="kpi-title">Avg Cycle Time</span>
+                    <i class="fas fa-clock" style="color: #60a5fa;"></i>
+                </div>
+                <div class="kpi-value" id="cycle-time">2.3 Days</div>
+                <div class="kpi-change change-positive">
+                    <i class="fas fa-arrow-down"></i>
+                    <span>-89% vs baseline</span>
+                </div>
+            </div>
+            <div class="kpi-card" data-tooltip="Percentage of procurement processes fully automated">
+                <div class="kpi-header">
+                    <span class="kpi-title">Automation Rate</span>
+                    <i class="fas fa-robot" style="color: #8b5cf6;"></i>
+                </div>
+                <div class="kpi-value" id="automation-rate">94.7%</div>
+                <div class="kpi-change change-positive">
+                    <i class="fas fa-arrow-up"></i>
+                    <span>+12.3% this quarter</span>
+                </div>
+            </div>
+            <div class="kpi-card" data-tooltip="Overall supplier risk score (lower is better)">
+                <div class="kpi-header">
+                    <span class="kpi-title">Risk Score</span>
+                    <i class="fas fa-shield-alt" style="color: #f59e0b;"></i>
+                </div>
+                <div class="kpi-value" id="risk-score">2.1/10</div>
+                <div class="kpi-change change-positive">
+                    <i class="fas fa-arrow-down"></i>
+                    <span>-67% vs industry avg</span>
+                </div>
+            </div>
+            <div class="kpi-card" data-tooltip="Number of fraudulent transactions prevented this month">
+                <div class="kpi-header">
+                    <span class="kpi-title">Fraud Prevented</span>
+                    <i class="fas fa-exclamation-triangle" style="color: #ef4444;"></i>
+                </div>
+                <div class="kpi-value" id="fraud-prevented">1,247</div>
+                <div class="kpi-change change-positive">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>$3.2M protected</span>
+                </div>
+            </div>
+            <div class="kpi-card" data-tooltip="AI decision accuracy across all agents">
+                <div class="kpi-header">
+                    <span class="kpi-title">AI Accuracy</span>
+                    <i class="fas fa-bullseye" style="color: #10b981;"></i>
+                </div>
+                <div class="kpi-value" id="ai-accuracy">97.2%</div>
+                <div class="kpi-change change-positive">
+                    <i class="fas fa-arrow-up"></i>
+                    <span>+2.1% this month</span>
+                </div>
+            </div>
+            <div class="kpi-card" data-tooltip="Procurement cost optimization over the last 7 days">
+                <div class="kpi-header">
+                    <span class="kpi-title">Daily Savings Trend</span>
+                    <i class="fas fa-chart-line" style="color: #22c55e;"></i>
+                </div>
+                <div class="kpi-value" id="daily-savings">$1.09M</div>
+                <div class="kpi-change change-positive">
+                    <i class="fas fa-arrow-up"></i>
+                    <span>+23% vs Last Week</span>
+                </div>
+                <div class="kpi-subvalue" style="color: #fbbf24; font-size: 1.1rem; font-weight: 600; margin-top: 0.3rem;">$156K <span style="color: #94a3b8; font-size: 0.9rem; font-weight: 400;">Daily Avg</span></div>
+            </div>
+        </div>
+
+        <!-- Live Workflow Simulation -->
+        <div class="workflow-simulation-section">
+            <div class="workflow-header">
+                <h2 class="workflow-title">
+                    <i class="fas fa-sitemap" style="color: #60a5fa; margin-right: 0.5rem;"></i>
+                    Live Workflow Simulation
+                </h2>
+                <div class="simulation-controls">
+                    <button class="sim-button scenario-btn active" id="new-supplier-sim" data-scenario="new-supplier">
+                        <i class="fas fa-plus"></i> New Supplier Onboarding <span class="scenario-check" style="display:none;"><i class="fas fa-check-circle"></i></span>
+                    </button>
+                    <button class="sim-button scenario-btn" id="emergency-procurement-sim" data-scenario="emergency">
+                        <i class="fas fa-bolt"></i> Emergency Procurement <span class="scenario-check" style="display:none;"><i class="fas fa-check-circle"></i></span>
+                    </button>
+                    <button class="sim-button primary" id="start-simulation">
+                        <i class="fas fa-play"></i> Start Simulation
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Workflow Canvas Container -->
+            <div class="workflow-canvas" id="workflow-canvas">
+                <!-- New Supplier Onboarding Workflow -->
+                <div class="workflow-scenario" id="supplier-onboarding-workflow" data-scenario="new-supplier">
+                    <div class="scenario-header">
+                        <h3><i class="fas fa-plus-circle" style="color: #8b5cf6;"></i> New Supplier Onboarding Workflow</h3>
+                        <p>Comprehensive validation and integration process for new suppliers</p>
+                    </div>
+                    <div class="workflow-horizontal-canvas">
+                        <div class="workflow-swimlane">
+                            <div class="workflow-swimlane-row">
+                                <!-- Step 1 -->
+                                <div class="workflow-step" data-timing="2.3" data-scenario="new-supplier">
+                                    <div class="step-number">1</div>
+                                    <div class="step-title">Requirement Analysis</div>
+                                    <div class="step-agent">APOLLO</div>
+                                    <div class="step-timing"><div>2.3s</div></div>
+                                    <div class="tooltip">APOLLO analyzes the onboarding request</div>
+                                </div>
+                                <!-- Step 2 -->
+                                <div class="workflow-step" data-timing="1.7" data-scenario="new-supplier">
+                                    <div class="step-number">2</div>
+                                    <div class="step-title">Supplier Discovery</div>
+                                    <div class="step-agent">ARIA</div>
+                                    <div class="step-timing"><div>1.7s</div></div>
+                                    <div class="tooltip">ARIA identifies new suppliers</div>
+                                </div>
+                                <!-- Spacer for 3A -->
+                                <div class="workflow-swimlane-spacer"></div>
+                                <!-- Step 4 -->
+                                <div class="workflow-step" data-timing="2.9" data-scenario="new-supplier">
+                                    <div class="step-number">4</div>
+                                    <div class="step-title">Contract Generation</div>
+                                    <div class="step-agent">ALEX</div>
+                                    <div class="step-timing"><div>2.9s</div></div>
+                                    <div class="tooltip">ALEX generates contract</div>
+                                </div>
+                                <!-- Step 5 -->
+                                <div class="workflow-step" data-timing="1.2" data-scenario="new-supplier">
+                                    <div class="step-number">5</div>
+                                    <div class="step-title">Onboarding Complete</div>
+                                    <div class="step-agent">APOLLO</div>
+                                    <div class="step-timing"><div>1.2s</div></div>
+                                    <div class="tooltip">Supplier onboarded</div>
+                                </div>
+                                <!-- Step 6 -->
+                                <div class="workflow-step" data-timing="2.5" data-scenario="new-supplier">
+                                    <div class="step-number">6</div>
+                                    <div class="step-title">Supplier Activated</div>
+                                    <div class="step-agent">APOLLO</div>
+                                    <div class="step-timing"><div>2.5s</div></div>
+                                    <div class="tooltip">Supplier is now active in the system</div>
+                                </div>
+                            </div>
+                            <div class="workflow-swimlane-row">
+                                <!-- Spacer for 1,2 -->
+                                <div class="workflow-swimlane-spacer"></div>
+                                <div class="workflow-swimlane-spacer"></div>
+                                <!-- Step 3A -->
+                                <div class="workflow-step" data-timing="4.1" data-scenario="new-supplier">
+                                    <div class="step-number">3A</div>
+                                    <div class="step-title">Quality Validation</div>
+                                    <div class="step-agent">ATLAS</div>
+                                    <div class="step-timing"><div>4.1s</div></div>
+                                    <div class="tooltip">ATLAS validates certifications</div>
+                                </div>
+                                <!-- Step 3B -->
+                                <div class="workflow-step" data-timing="3.6" data-scenario="new-supplier">
+                                    <div class="step-number">3B</div>
+                                    <div class="step-title">Risk Assessment</div>
+                                    <div class="step-agent">ARCHER</div>
+                                    <div class="step-timing"><div>3.6s</div></div>
+                                    <div class="tooltip">ARCHER checks risk</div>
+                                </div>
+                                <!-- Spacer for 4,5,6 -->
+                                <div class="workflow-swimlane-spacer"></div>
+                                <div class="workflow-swimlane-spacer"></div>
+                                <div class="workflow-swimlane-spacer"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Emergency Procurement Workflow -->
+                <div class="workflow-scenario" id="emergency-procurement-workflow" data-scenario="emergency" style="display:none;">
+                    <div class="scenario-header">
+                        <h3><i class="fas fa-bolt" style="color: #ef4444;"></i> Emergency Procurement Workflow</h3>
+                        <p>Rapid response procurement for urgent business needs - Total Time: 4 minutes</p>
+                    </div>
+                    <div class="workflow-horizontal-canvas">
+                        <div class="workflow-swimlane">
+                            <div class="workflow-swimlane-row">
+                                <!-- Step 1: CTO Request -->
+                                <div class="workflow-step emergency-step" data-timing="0.5" data-scenario="emergency">
+                                    <div class="step-number">1</div>
+                                    <div class="step-title">Urgent Request</div>
+                                    <div class="step-agent">CTO</div>
+                                    <div class="step-timing"><div>0.5s</div></div>
+                                    <div class="tooltip">"Need 500 laptops in 2 weeks"</div>
+                                </div>
+                                <!-- Step 2: APOLLO Analysis -->
+                                <div class="workflow-step emergency-step" data-timing="0.8" data-scenario="emergency">
+                                    <div class="step-number">2</div>
+                                    <div class="step-title">Emergency Analysis</div>
+                                    <div class="step-agent">APOLLO</div>
+                                    <div class="step-timing"><div>0.8s</div></div>
+                                    <div class="tooltip">APOLLO processes urgent requirement</div>
+                                </div>
+                                <!-- Step 3: ARIA Supplier Analysis -->
+                                <div class="workflow-step emergency-step" data-timing="1.2" data-scenario="emergency">
+                                    <div class="step-number">3</div>
+                                    <div class="step-title">Supplier Analysis</div>
+                                    <div class="step-agent">ARIA</div>
+                                    <div class="step-timing"><div>1.2s</div></div>
+                                    <div class="tooltip">ARIA analyzes capacity & pricing</div>
+                                </div>
+                                <!-- Step 4: Top Suppliers Identified -->
+                                <div class="workflow-step emergency-step" data-timing="0.3" data-scenario="emergency">
+                                    <div class="step-number">4</div>
+                                    <div class="step-title">Suppliers Identified</div>
+                                    <div class="step-agent">ARIA</div>
+                                    <div class="step-timing"><div>0.3s</div></div>
+                                    <div class="tooltip">Top 3 suppliers identified</div>
+                                </div>
+                            </div>
+                            <div class="workflow-swimlane-row">
+                                <!-- Step 5: Contract Generation -->
+                                <div class="workflow-step emergency-step" data-timing="0.7" data-scenario="emergency">
+                                    <div class="step-number">5</div>
+                                    <div class="step-title">Emergency Contract</div>
+                                    <div class="step-agent">ALEX</div>
+                                    <div class="step-timing"><div>0.7s</div></div>
+                                    <div class="tooltip">ALEX generates emergency contract</div>
+                                </div>
+                                <!-- Step 6: Automated Negotiation -->
+                                <div class="workflow-step emergency-step" data-timing="0.4" data-scenario="emergency">
+                                    <div class="step-number">6</div>
+                                    <div class="step-title">Auto Negotiation</div>
+                                    <div class="step-agent">ALEX</div>
+                                    <div class="step-timing"><div>0.4s</div></div>
+                                    <div class="tooltip">Automated negotiation with suppliers</div>
+                                </div>
+                                <!-- Step 7: Contracts Signed -->
+                                <div class="workflow-step emergency-step" data-timing="0.1" data-scenario="emergency">
+                                    <div class="step-number">7</div>
+                                    <div class="step-title">Contracts Signed</div>
+                                    <div class="step-agent">ALEX</div>
+                                    <div class="step-timing"><div>0.1s</div></div>
+                                    <div class="tooltip">Contracts signed automatically</div>
+                                </div>
+                                <!-- Step 8: Order Confirmation -->
+                                <div class="workflow-step emergency-step" data-timing="0.2" data-scenario="emergency">
+                                    <div class="step-number">8</div>
+                                    <div class="step-title">Order Confirmed</div>
+                                    <div class="step-agent">APOLLO</div>
+                                    <div class="step-timing"><div>0.2s</div></div>
+                                    <div class="tooltip">"Order placed, delivery in 10 days"</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Daily Savings Trend Chart -->
+        <div class="dashboard-chart-container">
+            <h3 style="font-size: 1.2rem; font-weight: 600; color: #f1f5f9; margin-bottom: 0.5rem;">
+                <i class="fas fa-chart-line" style="color: #22c55e; margin-right: 0.5rem;"></i>
+                Daily Savings Trend
+            </h3>
+            <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 1.5rem;">Procurement cost optimization over the last 7 days</p>
+            <div class="chart-bars">
+                <div class="chart-bar" style="height: 60%;" data-value="$127K" data-day="Mon"></div>
+                <div class="chart-bar" style="height: 75%;" data-value="$158K" data-day="Tue"></div>
+                <div class="chart-bar" style="height: 45%;" data-value="$95K" data-day="Wed"></div>
+                <div class="chart-bar" style="height: 90%;" data-value="$189K" data-day="Thu"></div>
+                <div class="chart-bar" style="height: 65%;" data-value="$137K" data-day="Fri"></div>
+                <div class="chart-bar" style="height: 85%;" data-value="$178K" data-day="Sat"></div>
+                <div class="chart-bar" style="height: 100%;" data-value="$210K" data-day="Sun"></div>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #334155;">
+                <div style="display: flex; gap: 2rem;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 1.2rem; font-weight: 700; color: #22c55e;">$1.09M</div>
+                        <div style="font-size: 0.8rem; color: #94a3b8;">Total Saved</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 1.2rem; font-weight: 700; color: #60a5fa;">+23%</div>
+                        <div style="font-size: 0.8rem; color: #94a3b8;">vs Last Week</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 1.2rem; font-weight: 700; color: #fbbf24;">$156K</div>
+                        <div style="font-size: 0.8rem; color: #94a3b8;">Daily Average</div>
+                    </div>
+                </div>
+                <button class="sim-button" style="background: linear-gradient(45deg, #22c55e, #16a34a);">
+                    <i class="fas fa-download"></i> Export Report
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            let currentScenario = 'new-supplier';
+            
+            function switchScenario(scenario) {
+                // Update button states
+                document.querySelectorAll('.scenario-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.getAttribute('data-scenario') === scenario) {
+                        btn.classList.add('active');
+                    }
+                });
+                
+                // Show/hide workflow scenarios
+                document.querySelectorAll('.workflow-scenario').forEach(workflow => {
+                    if (workflow.getAttribute('data-scenario') === scenario) {
+                        workflow.style.display = 'block';
+                    } else {
+                        workflow.style.display = 'none';
+                    }
+                });
+                
+                currentScenario = scenario;
+            }
+            
+            function getStepMap(scenario) {
+                const selector = scenario ? `.workflow-step[data-scenario="${scenario}"]` : '.workflow-step';
+                const allSteps = Array.from(document.querySelectorAll(selector)).filter(s => !s.classList.contains('workflow-swimlane-spacer'));
+                const stepMap = {};
+                allSteps.forEach(step => {
+                    const num = step.querySelector('.step-number')?.textContent.trim();
+                    if (num) stepMap[num] = step;
+                });
+                return stepMap;
+            }
+
+            async function animateStep(step) {
+                step.classList.add('active');
+                step.classList.remove('completed');
+                const timingDiv = step.querySelector('.step-timing div');
+                const duration = parseFloat(step.getAttribute('data-timing')) || 1.2;
+                let elapsed = 0;
+                
+                return new Promise(res => {
+                    const interval = 30;
+                    const timer = setInterval(() => {
+                        elapsed += interval;
+                        const sec = Math.min(duration, (elapsed / 1000)).toFixed(1);
+                        if (timingDiv) timingDiv.textContent = sec + 's';
+                        if (elapsed >= duration * 1000) {
+                            clearInterval(timer);
+                            if (timingDiv) timingDiv.textContent = duration.toFixed(1) + 's';
+                            step.classList.remove('active');
+                            step.classList.add('completed');
+                            res();
+                        }
+                    }, interval);
+                });
+            }
+
+            function resetSteps(stepMap) {
+                Object.values(stepMap).forEach(step => {
+                    step.classList.remove('active', 'completed');
+                    const timingDiv = step.querySelector('.step-timing div');
+                    if (timingDiv) {
+                        const orig = step.getAttribute('data-timing') || timingDiv.textContent;
+                        timingDiv.textContent = parseFloat(orig).toFixed(1) + 's';
+                    }
+                });
+            }
+
+            async function runSupplierOnboardingSimulation() {
+                const stepMap = getStepMap('new-supplier');
+                resetSteps(stepMap);
+                
+                // Animate steps in sequence
+                await animateStep(stepMap['1']);
+                await animateStep(stepMap['2']);
+                
+                // Run parallel steps 3A and 3B
+                await Promise.all([
+                    stepMap['3A'] ? animateStep(stepMap['3A']) : Promise.resolve(),
+                    stepMap['3B'] ? animateStep(stepMap['3B']) : Promise.resolve()
+                ]);
+                
+                await animateStep(stepMap['4']);
+                await animateStep(stepMap['5']);
+                await animateStep(stepMap['6']);
+                
+                showCompletionNotification('Supplier Onboarding completed successfully!', '#8b5cf6');
+            }
+            
+            async function runEmergencyProcurementSimulation() {
+                const stepMap = getStepMap('emergency');
+                resetSteps(stepMap);
+                
+                // Emergency procurement sequence based on the sequence diagram
+                await animateStep(stepMap['1']); // CTO Urgent Request
+                await animateStep(stepMap['2']); // APOLLO Emergency Analysis
+                await animateStep(stepMap['3']); // ARIA Supplier Analysis
+                await animateStep(stepMap['4']); // Top 3 Suppliers Identified
+                await animateStep(stepMap['5']); // ALEX Emergency Contract
+                await animateStep(stepMap['6']); // Automated Negotiation
+                await animateStep(stepMap['7']); // Contracts Signed
+                await animateStep(stepMap['8']); // Order Confirmed
+                
+                showCompletionNotification('Emergency Procurement completed in 4 minutes!', '#ef4444');
+            }
+            
+            function showCompletionNotification(message, color) {
+                setTimeout(() => {
+                    const notification = document.createElement('div');
+                    notification.style.cssText = `
+                        position: fixed;
+                        top: 2rem;
+                        right: 2rem;
+                        background: linear-gradient(145deg, ${color}, ${color}dd);
+                        color: white;
+                        padding: 1rem 1.5rem;
+                        border-radius: 12px;
+                        box-shadow: 0 10px 25px ${color}66;
+                        z-index: 1000;
+                        animation: slideIn 0.5s ease-out;
+                        font-weight: 600;
+                    `;
+                    notification.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
+                    document.body.appendChild(notification);
+                    
+                    setTimeout(() => {
+                        notification.style.animation = 'slideOut 0.5s ease-in';
+                        setTimeout(() => document.body.removeChild(notification), 500);
+                    }, 3000);
+                }, 500);
+            }
+            
+            async function runSimulation() {
+                if (currentScenario === 'new-supplier') {
+                    await runSupplierOnboardingSimulation();
+                } else if (currentScenario === 'emergency') {
+                    await runEmergencyProcurementSimulation();
+                }
+            }
+
+            // Add animation keyframes
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes slideIn {
+                    from { transform: translateX(100%); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
+                }
+                @keyframes slideOut {
+                    from { transform: translateX(0); opacity: 1; }
+                    to { transform: translateX(100%); opacity: 0; }
+                }
+            `;
+            document.head.appendChild(style);
+
+            // Event listeners
+            const simBtn = document.getElementById('start-simulation');
+            if (simBtn) {
+                simBtn.onclick = runSimulation;
+            }
+            
+            const supplierBtn = document.getElementById('new-supplier-sim');
+            if (supplierBtn) {
+                supplierBtn.onclick = () => switchScenario('new-supplier');
+            }
+            
+            const emergencyBtn = document.getElementById('emergency-procurement-sim');
+            if (emergencyBtn) {
+                emergencyBtn.onclick = () => switchScenario('emergency');
+            }
+        })();
+    </script>
+</body>
+</html>

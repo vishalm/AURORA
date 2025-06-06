@@ -1,0 +1,79 @@
+#settings-page .settings-header { text-align: center; margin-bottom: 2rem; }
+#settings-page .settings-title { font-size: 2rem; font-weight: 700; color: #f1f5f9; margin-bottom: 0.5rem; }
+#settings-page .settings-subtitle { color: #94a3b8; font-size: 1.1rem; margin-bottom: 1.5rem; }
+#settings-page .settings-nav { display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap; }
+#settings-page .settings-tab { background: linear-gradient(135deg, rgba(30, 58, 95, 0.7), rgba(15, 23, 42, 0.8)); border: 1px solid #334155; color: #e2e8f0; border-radius: 8px 8px 0 0; padding: 0.8rem 1.5rem; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s; outline: none; }
+#settings-page .settings-tab.active, #settings-page .settings-tab:hover { background: linear-gradient(135deg, #3b82f6 30%, #60a5fa 100%); color: #fff; border-color: #3b82f6; }
+#settings-page .settings-content { background: linear-gradient(135deg, rgba(30, 58, 95, 0.5), rgba(15, 23, 42, 0.7)); border-radius: 0 0 12px 12px; padding: 2rem; box-shadow: 0 8px 32px rgba(30,58,95,0.12); }
+#settings-page .settings-panel { display: none; }
+#settings-page .settings-panel.active { display: block; animation: fadeInPage 0.3s; }
+#settings-page .settings-group { margin-bottom: 1.5rem; }
+#settings-page .settings-label { color: #f1f5f9; font-size: 1rem; font-weight: 500; margin-bottom: 0.5rem; display: block; }
+#settings-page .settings-select { width: 100%; padding: 0.6rem; background: rgba(30, 58, 95, 0.3); border: 1px solid #475569; border-radius: 4px; color: #f1f5f9; font-size: 0.95rem; }
+#settings-page .settings-select:focus { outline: none; border-color: #60a5fa; box-shadow: 0 0 10px rgba(96, 165, 250, 0.3); }
+#settings-page .settings-checkbox { display: flex; align-items: center; gap: 0.7rem; font-size: 0.98rem; color: #e2e8f0; margin-bottom: 0.7rem; cursor: pointer; }
+#settings-page .settings-checkbox input[type="checkbox"] { accent-color: #3b82f6; width: 18px; height: 18px; }
+#settings-page .checkmark { width: 18px; height: 18px; border-radius: 4px; background: #1e293b; border: 1px solid #475569; display: inline-block; position: relative; }
+#settings-page .settings-checkbox input[type="checkbox"]:checked + .checkmark { background: #3b82f6; border-color: #3b82f6; }
+#settings-page .color-picker { display: flex; gap: 0.7rem; margin-top: 0.5rem; }
+#settings-page .color-option { width: 28px; height: 28px; border-radius: 50%; border: 2px solid #475569; cursor: pointer; transition: border 0.2s; }
+#settings-page .color-option.active, #settings-page .color-option:hover { border: 2px solid #3b82f6; box-shadow: 0 0 0 2px #60a5fa33; }
+#settings-page .slider { width: 100%; height: 6px; border-radius: 3px; background: #475569; outline: none; margin-top: 0.5rem; }
+#settings-page .slider::-webkit-slider-thumb { appearance: none; width: 18px; height: 18px; border-radius: 50%; background: #3b82f6; cursor: pointer; }
+#settings-page .slider-value { color: #60a5fa; font-weight: 500; text-align: center; margin-left: 0.5rem; }
+#settings-page .analytics-main-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; }
+#settings-page .analytics-card { background: linear-gradient(135deg, rgba(30, 58, 95, 0.7), rgba(15, 23, 42, 0.8)); border: 1px solid #334155; border-radius: 12px; padding: 1.5rem; transition: all 0.3s ease; }
+#settings-page .analytics-card.large { grid-column: span 2; }
+#settings-page .analytics-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem; }
+#settings-page .analytics-title { display: flex; align-items: center; gap: 0.5rem; color: #f1f5f9; font-size: 1.1rem; font-weight: 600; }
+#settings-page .analytics-controls { display: flex; gap: 0.5rem; }
+#settings-page .analytics-btn { padding: 0.5rem 1rem; border: 1px solid #475569; background: linear-gradient(45deg, rgba(30, 58, 95, 0.5), rgba(15, 23, 42, 0.7)); color: #e2e8f0; border-radius: 6px; cursor: pointer; transition: all 0.3s ease; font-size: 0.8rem; display: flex; align-items: center; gap: 0.3rem; }
+#settings-page .analytics-btn:hover { background: linear-gradient(45deg, rgba(59, 130, 246, 0.3), rgba(96, 165, 250, 0.2)); border-color: #60a5fa; }
+#settings-page .analytics-content { position: relative; }
+#settings-page .users-table { width: 100%; border-radius: 8px; overflow: hidden; margin-bottom: 1.5rem; }
+#settings-page .user-row { display: flex; align-items: center; border-bottom: 1px solid #334155; background: rgba(30, 58, 95, 0.3); transition: background 0.2s; }
+#settings-page .user-row.header { background: #1e293b; font-weight: 600; color: #60a5fa; }
+#settings-page .user-row:last-child { border-bottom: none; }
+#settings-page .user-cell { flex: 1; padding: 0.8rem; font-size: 0.98rem; color: #e2e8f0; }
+#settings-page .role-badge { background: linear-gradient(45deg, #3b82f6, #60a5fa); color: #fff; border-radius: 8px; padding: 0.2rem 0.7rem; font-size: 0.85rem; font-weight: 600; }
+#settings-page .role-badge.manager { background: linear-gradient(45deg, #f59e0b, #fbbf24); color: #fff; }
+#settings-page .role-badge.user { background: linear-gradient(45deg, #8b5cf6, #a855f7); color: #fff; }
+#settings-page .status-badge { border-radius: 8px; padding: 0.2rem 0.7rem; font-size: 0.85rem; font-weight: 600; }
+#settings-page .status-badge.active { background: #22c55e; color: #fff; }
+#settings-page .status-badge.inactive { background: #ef4444; color: #fff; }
+#settings-page .user-action-btn { background: transparent; border: none; color: #60a5fa; font-size: 1rem; cursor: pointer; margin-right: 0.5rem; transition: color 0.2s; }
+#settings-page .user-action-btn:hover { color: #3b82f6; }
+#settings-page .permissions-group { margin-bottom: 1.2rem; }
+#settings-page .permission-list { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.5rem; }
+#settings-page .permission-badge { background: #334155; color: #e2e8f0; border-radius: 6px; padding: 0.2rem 0.7rem; font-size: 0.85rem; font-weight: 500; }
+#settings-page .ai-agent-settings { display: flex; flex-direction: column; gap: 2rem; }
+#settings-page .agent-setting-item { background: rgba(30, 58, 95, 0.3); border: 1px solid #334155; border-radius: 8px; padding: 1.2rem; margin-bottom: 1.2rem; }
+#settings-page .agent-setting-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+#settings-page .agent-toggle { position: relative; }
+#settings-page .agent-toggle input[type="checkbox"] { display: none; }
+#settings-page .agent-toggle label { width: 50px; height: 24px; background: #475569; border-radius: 12px; cursor: pointer; position: relative; transition: all 0.3s; display: block; }
+#settings-page .agent-toggle label::after { content: ''; width: 20px; height: 20px; background: white; border-radius: 50%; position: absolute; top: 2px; left: 2px; transition: all 0.3s; }
+#settings-page .agent-toggle input[type="checkbox"]:checked + label { background: #3b82f6; }
+#settings-page .agent-toggle input[type="checkbox"]:checked + label::after { left: 28px; }
+#settings-page .agent-setting-controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+#settings-page .setting-control { display: flex; flex-direction: column; gap: 0.5rem; }
+#settings-page .setting-control label { color: #94a3b8; font-size: 0.9rem; }
+#settings-page .settings-placeholder { text-align: center; color: #64748b; font-size: 1.1rem; margin-top: 2rem; }
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  #settings-page .analytics-main-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+  #settings-page .settings-content { padding: 1rem; }
+}
+@media (max-width: 768px) {
+  #settings-page .settings-nav { gap: 0.5rem; }
+  #settings-page .settings-content { padding: 0.5rem; }
+  #settings-page .analytics-main-grid { grid-template-columns: 1fr; gap: 1rem; }
+  #settings-page .analytics-card, #settings-page .analytics-card.large { padding: 1rem; }
+  #settings-page .settings-tab { padding: 0.6rem 1rem; font-size: 0.95rem; }
+  #settings-page .agent-setting-item { padding: 0.8rem; }
+}
+@media (max-width: 500px) {
+  #settings-page .settings-nav { flex-direction: column; gap: 0.3rem; }
+  #settings-page .settings-tab { width: 100%; text-align: left; }
+} 

@@ -1,0 +1,789 @@
+/* ========================================
+   AURORA - Dashboard CSS
+   Dashboard-specific styles and components
+======================================== */
+
+/* Dashboard Grid Layout */
+#dashboard-page .main-dashboard {
+    position: relative;
+    z-index: 1;
+}
+
+#dashboard-page .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+/* KPI Cards */
+#dashboard-page .kpi-card {
+    background: linear-gradient(135deg, rgba(30, 58, 95, 0.8), rgba(15, 23, 42, 0.9));
+    border: 1px solid #334155;
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+#dashboard-page .kpi-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(59, 130, 246, 0.2);
+    border-color: #3b82f6;
+}
+
+#dashboard-page .kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #3b82f6, #60a5fa, #93c5fd);
+}
+
+#dashboard-page .kpi-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: white;
+    flex-shrink: 0;
+}
+
+#dashboard-page .kpi-data {
+    flex: 1;
+}
+
+#dashboard-page .kpi-data .kpi-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #f1f5f9;
+    margin-bottom: 0.3rem;
+}
+
+#dashboard-page .kpi-data .kpi-label {
+    color: #94a3b8;
+    font-size: 0.9rem;
+    margin-bottom: 0.3rem;
+}
+
+#dashboard-page .kpi-trend {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+#dashboard-page .kpi-trend.positive {
+    color: #22c55e;
+}
+
+#dashboard-page .kpi-trend.negative {
+    color: #ef4444;
+}
+
+#dashboard-page .kpi-chart {
+    width: 80px;
+    height: 40px;
+    flex-shrink: 0;
+}
+
+/* Collaboration Matrix */
+#dashboard-page .collaboration-matrix {
+    background: linear-gradient(135deg, rgba(30, 58, 95, 0.7), rgba(15, 23, 42, 0.8));
+    border: 1px solid #334155;
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    transition: all 0.3s ease;
+}
+
+#dashboard-page .collaboration-matrix:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(59, 130, 246, 0.15);
+    border-color: #3b82f6;
+}
+
+#dashboard-page .matrix-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+#dashboard-page .matrix-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #f1f5f9;
+    margin-bottom: 0.5rem;
+}
+
+#dashboard-page .matrix-subtitle {
+    color: #94a3b8;
+    font-size: 1rem;
+}
+
+#dashboard-page .neural-network {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+}
+
+#dashboard-page .agent-node {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+#dashboard-page .agent-node:hover {
+    transform: scale(1.1);
+    z-index: 10;
+}
+
+#dashboard-page .agent-node i {
+    font-size: 1.5rem;
+    margin-bottom: 0.3rem;
+}
+
+#dashboard-page .agent-node.aria {
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(45deg, #10b981, #059669);
+}
+
+#dashboard-page .agent-node.alex {
+    top: 150px;
+    left: 20%;
+    background: linear-gradient(45deg, #8b5cf6, #7c3aed);
+}
+
+#dashboard-page .agent-node.apollo {
+    top: 150px;
+    right: 20%;
+    background: linear-gradient(45deg, #f59e0b, #d97706);
+}
+
+#dashboard-page .agent-node.atlas {
+    bottom: 100px;
+    left: 30%;
+    background: linear-gradient(45deg, #ef4444, #dc2626);
+}
+
+#dashboard-page .agent-node.archer {
+    bottom: 100px;
+    right: 30%;
+    background: linear-gradient(45deg, #3b82f6, #2563eb);
+}
+
+/* Connection lines */
+#dashboard-page .connection-lines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+#dashboard-page .connection-line {
+    stroke: #60a5fa;
+    stroke-width: 2;
+    fill: none;
+    opacity: 0.6;
+    animation: pulse-line 3s ease-in-out infinite;
+}
+
+@keyframes pulse-line {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+}
+
+#dashboard-page .collaboration-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+#dashboard-page .collab-stat {
+    background: rgba(30, 58, 95, 0.5);
+    border: 1px solid #475569;
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+}
+
+#dashboard-page .collab-stat-value {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #f1f5f9;
+    margin-bottom: 0.3rem;
+}
+
+#dashboard-page .collab-stat-label {
+    color: #94a3b8;
+    font-size: 0.8rem;
+}
+
+/* Performance Metrics */
+#dashboard-page .performance-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+#dashboard-page .performance-card {
+    background: linear-gradient(135deg, rgba(30, 58, 95, 0.7), rgba(15, 23, 42, 0.8));
+    border: 1px solid #334155;
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+#dashboard-page .performance-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(59, 130, 246, 0.15);
+    border-color: #3b82f6;
+}
+
+#dashboard-page .performance-header {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+}
+
+#dashboard-page .performance-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    color: white;
+}
+
+#dashboard-page .performance-title {
+    color: #f1f5f9;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+#dashboard-page .metric-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.8rem;
+}
+
+#dashboard-page .metric-label {
+    color: #94a3b8;
+    font-size: 0.9rem;
+}
+
+#dashboard-page .metric-value {
+    color: #f1f5f9;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+#dashboard-page .metric-bar {
+    width: 100%;
+    height: 6px;
+    background: rgba(71, 85, 105, 0.3);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-top: 0.3rem;
+}
+
+#dashboard-page .metric-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.3s ease;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    #dashboard-page .collaboration-matrix {
+        padding: 1.5rem;
+    }
+    
+    #dashboard-page .neural-network {
+        height: 350px;
+    }
+    
+    #dashboard-page .agent-node {
+        width: 80px;
+        height: 80px;
+        font-size: 0.7rem;
+    }
+    
+    #dashboard-page .agent-node i {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    #dashboard-page .kpi-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    #dashboard-page .collaboration-matrix {
+        padding: 1rem;
+    }
+    
+    #dashboard-page .neural-network {
+        height: 300px;
+    }
+    
+    #dashboard-page .agent-node {
+        width: 60px;
+        height: 60px;
+        font-size: 0.6rem;
+    }
+    
+    #dashboard-page .agent-node i {
+        font-size: 1rem;
+        margin-bottom: 0.2rem;
+    }
+    
+    #dashboard-page .collaboration-stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.8rem;
+    }
+    
+    #dashboard-page .performance-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+}
+
+#dashboard-page .kpi-header { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; }
+#dashboard-page .kpi-title { font-size: 1.1rem; font-weight: 600; color: #f1f5f9; }
+#dashboard-page .kpi-value { font-size: 1.7rem; font-weight: 700; color: #f1f5f9; margin-bottom: 0.3rem; }
+#dashboard-page .kpi-change { display: flex; align-items: center; gap: 0.3rem; font-size: 0.9rem; font-weight: 500; margin-top: 0.2rem; }
+#dashboard-page .change-positive { color: #22c55e; }
+#dashboard-page .change-negative { color: #ef4444; }
+#dashboard-page .collaboration-matrix .matrix-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 0.5rem; margin-top: 1.5rem; }
+#dashboard-page .matrix-cell { background: rgba(30, 58, 95, 0.5); border: 1px solid #334155; border-radius: 6px; padding: 0.7rem 0.3rem; text-align: center; color: #f1f5f9; font-size: 0.95rem; font-weight: 500; }
+#dashboard-page .matrix-cell.header { background: #1e293b; color: #60a5fa; font-weight: 700; font-size: 1rem; }
+#dashboard-page .matrix-cell.high { background: rgba(34, 197, 94, 0.15); color: #22c55e; font-weight: 700; }
+#dashboard-page .matrix-cell.medium { background: rgba(251, 191, 36, 0.15); color: #fbbf24; font-weight: 700; }
+#dashboard-page .workflow-simulation-section {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    border: 1px solid #334155;
+    border-radius: 18px;
+    padding: 3.5rem 2.5rem 3.5rem 2.5rem;
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+    min-height: 420px;
+    box-shadow: 0 8px 32px rgba(30,58,95,0.18), 0 0 80px 0 #60a5fa22 inset;
+    position: relative;
+    overflow: visible;
+    animation: sim-bg-fade 6s ease-in-out infinite alternate;
+}
+@keyframes sim-bg-fade {
+    0% { box-shadow: 0 8px 32px rgba(30,58,95,0.18), 0 0 80px 0 #60a5fa22 inset; }
+    100% { box-shadow: 0 8px 32px rgba(30,58,95,0.28), 0 0 120px 0 #22c55e22 inset; }
+}
+#dashboard-page .workflow-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+}
+#dashboard-page .workflow-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #f1f5f9;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+}
+#dashboard-page .simulation-controls { display: flex; gap: 0.7rem; }
+#dashboard-page .sim-button { padding: 0.5rem 1.2rem; border: 1px solid #475569; background: linear-gradient(45deg, rgba(30, 58, 95, 0.5), rgba(15, 23, 42, 0.7)); color: #e2e8f0; border-radius: 6px; cursor: pointer; transition: all 0.3s ease; font-size: 0.95rem; display: flex; align-items: center; gap: 0.3rem; font-weight: 600; }
+#dashboard-page .sim-button.primary { background: linear-gradient(45deg, #3b82f6, #60a5fa); color: #fff; border-color: #3b82f6; }
+#dashboard-page .sim-button:hover { background: linear-gradient(45deg, #60a5fa, #3b82f6); color: #fff; border-color: #60a5fa; }
+#dashboard-page .workflow-canvas {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    overflow-x: auto;
+    padding-bottom: 3.5rem;
+    min-height: 420px;
+    position: relative;
+    background: linear-gradient(90deg, #1e293b 0%, #334155 100%);
+    border-radius: 16px;
+    box-shadow: 0 4px 32px 0 #60a5fa22 inset, 0 2px 8px #33415555;
+}
+#dashboard-page .workflow-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2.5rem;
+    margin-bottom: 0;
+    position: relative;
+    width: 100%;
+    min-height: 100px;
+    z-index: 1;
+}
+#dashboard-page .workflow-row.parallel {
+    gap: 6rem;
+    margin-bottom: 0;
+}
+#dashboard-page .workflow-step {
+    background: linear-gradient(135deg, #1e293b 60%, #334155 100%);
+    border: 2.5px solid #60a5fa;
+    border-radius: 18px;
+    padding: 0.35rem 0.35rem 0.35rem 0.35rem;
+    min-width: 70px;
+    min-height: 36px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    font-size: 0.78rem;
+    box-shadow: 0 12px 36px 0 #60a5fa33, 0 2px 8px #33415555;
+    transition: box-shadow 0.3s, border-color 0.3s, transform 0.3s;
+    z-index: 2;
+    margin-bottom: 0;
+}
+#dashboard-page .workflow-step .step-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.3rem;
+    font-weight: 700;
+    border-radius: 50%;
+    background: #3b82f6;
+    color: #fff;
+    border: 2px solid #fff;
+    box-shadow: 0 2px 8px rgba(59,130,246,0.15);
+}
+#dashboard-page .workflow-step .step-title {
+    margin-bottom: 0.15rem;
+}
+#dashboard-page .workflow-step .step-description {
+    color: #cbd5e1;
+    font-size: 0.98rem;
+    margin-bottom: 0.2rem;
+}
+#dashboard-page .workflow-step .step-agent {
+    color: #22c55e;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+#dashboard-page .workflow-step .step-timing {
+    margin-top: auto;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fbbf24;
+    background: rgba(251,191,36,0.08);
+    border-radius: 6px;
+    padding: 0.3rem 0.8rem;
+    align-self: center;
+    box-shadow: 0 1px 4px rgba(251,191,36,0.08);
+}
+#dashboard-page .workflow-step.active {
+    box-shadow: 0 0 32px 8px #60a5fa88, 0 2px 8px #33415555;
+    border-color: #60a5fa;
+    transform: scale(1.09);
+    z-index: 3;
+    animation: workflow-glow 0.7s infinite alternate;
+}
+#dashboard-page .workflow-step.completed {
+    border-color: #22c55e;
+    background: linear-gradient(135deg, #22c55e22 0%, #1e293b 100%);
+    position: relative;
+    animation: workflow-complete-fade 0.5s;
+}
+#dashboard-page .workflow-step.completed::after {
+    content: '\f00c'; /* FontAwesome checkmark */
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    color: #22c55e;
+    font-size: 2.1rem;
+    position: absolute;
+    top: 10px;
+    right: 18px;
+    opacity: 0.85;
+    pointer-events: none;
+    animation: checkmark-pop 0.4s;
+}
+#dashboard-page .workflow-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    margin: 0 auto;
+    z-index: 2;
+    flex-shrink: 0;
+    background: none;
+    border: none;
+    padding: 0;
+}
+#dashboard-page .workflow-arrow svg {
+    width: 40px;
+    height: 40px;
+    display: block;
+    margin: 0 auto;
+    filter: drop-shadow(0 0 8px #60a5fa88);
+    animation: arrow-bounce 1.2s infinite alternate;
+}
+#dashboard-page .workflow-row.parallel {
+    gap: 6rem;
+    margin-bottom: 0;
+    position: relative;
+}
+#dashboard-page .workflow-row.parallel::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: -30px;
+    width: 2px;
+    height: 40px;
+    background: linear-gradient(180deg, #60a5fa 0%, #22c55e 100%);
+    z-index: 1;
+    transform: translateX(-50%);
+    border-radius: 2px;
+    animation: workflow-line-move 2.5s linear infinite alternate;
+}
+@media (max-width: 1200px) {
+  #dashboard-page .workflow-canvas { min-height: 180px; padding-bottom: 2rem; }
+  #dashboard-page .workflow-step { min-width: 40px; min-height: 24px; padding: 0.2rem; font-size: 0.6rem; }
+  #dashboard-page .workflow-step .step-number { width: 8px; height: 8px; font-size: 0.35rem; top: -3px; }
+}
+@media (max-width: 767px) {
+  #dashboard-page .workflow-canvas { min-height: 80px; padding-bottom: 1rem; }
+  #dashboard-page .workflow-step { min-width: 70px; min-height: 40px; padding: 0.3rem 0.1rem 0.3rem 0.1rem; }
+  #dashboard-page .workflow-step .step-number { width: 12px; height: 12px; font-size: 0.6rem; top: -3px; left: 50%; }
+  #dashboard-page .workflow-row.parallel { gap: 2rem; }
+}
+
+.scenario-btn { position: relative; transition: border 0.2s, background 0.2s; }
+.scenario-btn.scenario-selected { border: 2px solid #22c55e; background: linear-gradient(90deg, #22c55e22, #1e3a5f 80%); color: #22c55e; }
+.scenario-btn .scenario-check { display: none; margin-left: 0.5rem; color: #22c55e; font-size: 1.2rem; vertical-align: middle; }
+.scenario-btn.scenario-selected .scenario-check { display: inline; }
+.workflow-scenario { display: none; }
+.workflow-scenario.active { display: block; }
+.workflow-row { display: flex; align-items: flex-end; gap: 2.5rem; margin-bottom: 2.5rem; }
+@media (max-width: 1200px) { .workflow-row { gap: 1.2rem; margin-bottom: 1.2rem; } }
+@media (max-width: 767px) { .workflow-row { gap: 0.7rem; margin-bottom: 0.7rem; flex-direction: column; align-items: stretch; } }
+
+#dashboard-page .workflow-vertical-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+}
+#dashboard-page .workflow-grid-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 0;
+    position: relative;
+    min-height: 60px;
+}
+#dashboard-page .workflow-grid-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+#dashboard-page .workflow-grid-parallel {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    width: 100%;
+    gap: 0.7rem;
+    position: relative;
+    margin: 0.5rem 0 0.5rem 0;
+}
+#dashboard-page .parallel-connector {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    margin: 0 0.5rem;
+}
+#dashboard-page .workflow-grid-row.parallel-row {
+    min-height: 120px;
+}
+@media (max-width: 1200px) {
+  #dashboard-page .workflow-grid-parallel { gap: 0.3rem; }
+  #dashboard-page .workflow-grid-row.parallel-row { min-height: 80px; }
+}
+@media (max-width: 767px) {
+  #dashboard-page .workflow-grid-parallel { gap: 1rem; }
+  #dashboard-page .workflow-grid-row.parallel-row { min-height: 40px; }
+}
+
+#dashboard-page .workflow-parallel-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-width: 40px;
+    min-height: 36px;
+}
+#dashboard-page .parallel-connector {
+    width: 80px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+#dashboard-page .parallel-connector::before {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, #60a5fa 0%, #22c55e 100%);
+    border-radius: 2px;
+    opacity: 0.5;
+}
+@media (max-width: 1200px) {
+  #dashboard-page .workflow-parallel-col { min-width: 20px; min-height: 20px; }
+  #dashboard-page .parallel-connector { width: 30px; }
+  #dashboard-page .parallel-connector::before { width: 30px; }
+}
+@media (max-width: 767px) {
+  #dashboard-page .workflow-parallel-col { min-width: 50px; min-height: 40px; }
+  #dashboard-page .parallel-connector { width: 10px; }
+  #dashboard-page .parallel-connector::before { width: 10px; }
+}
+
+#dashboard-page .workflow-horizontal-canvas {
+    position: relative;
+    padding: 2.5rem 0 2rem 0;
+    min-width: 900px;
+}
+#dashboard-page .workflow-swimlane-grid {
+    display: grid;
+    grid-template-columns: 110px repeat(6, 170px);
+    grid-template-rows: 1fr 1fr;
+    gap: 0.7rem 1.2rem;
+    align-items: center;
+    position: relative;
+    background: linear-gradient(90deg, #f1f5f9 0%, #e0e7ef 100%);
+    border-radius: 18px;
+    box-shadow: 0 4px 32px 0 #33415518;
+    padding: 1.5rem 1.2rem 2.5rem 0.5rem;
+    margin: 0 auto;
+    width: fit-content;
+}
+#dashboard-page .swimlane-label {
+    grid-row: span 1;
+    display: flex;
+    align-items: center;
+    font-size: 1.08rem;
+    font-weight: 700;
+    color: #64748b;
+    letter-spacing: 0.02em;
+    padding-right: 0.7rem;
+    user-select: none;
+}
+#dashboard-page .main-label { grid-row: 1; grid-column: 1; }
+#dashboard-page .parallel-label { grid-row: 2; grid-column: 1; }
+#dashboard-page .swimlane-main-row {
+    grid-row: 1;
+    grid-column: 2 / span 6;
+    display: grid;
+    grid-template-columns: repeat(6, 170px);
+    gap: 1.2rem;
+}
+#dashboard-page .swimlane-parallel-row {
+    grid-row: 2;
+    grid-column: 2 / span 6;
+    display: grid;
+    grid-template-columns: repeat(6, 170px);
+    gap: 1.2rem;
+}
+#dashboard-page .workflow-step.empty {
+    background: none;
+    box-shadow: none;
+    border: none;
+    pointer-events: none;
+    opacity: 0;
+}
+#dashboard-page .swimlane-arrows {
+    position: absolute;
+    left: 110px;
+    top: 0;
+    width: calc(6 * 170px + 5 * 1.2rem);
+    height: 100px;
+    z-index: 2;
+    pointer-events: none;
+}
+@media (max-width: 1200px) {
+    #dashboard-page .workflow-horizontal-canvas {
+        min-width: 0;
+        padding: 1.2rem 0 1.2rem 0;
+    }
+    #dashboard-page .workflow-swimlane-grid {
+        padding: 0.7rem 0.5rem 1.2rem 0.2rem;
+    }
+    #dashboard-page .swimlane-main-row,
+    #dashboard-page .swimlane-parallel-row {
+        gap: 0.5rem;
+    }
+}
+#dashboard-page .workflow-swimlane {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    align-items: flex-start;
+    width: 100%;
+}
+#dashboard-page .workflow-swimlane-row {
+    display: flex;
+    flex-direction: row;
+    gap: 1.2rem;
+    align-items: flex-start;
+    width: 100%;
+}
+#dashboard-page .workflow-swimlane-spacer {
+    width: 170px;
+    min-width: 170px;
+    max-width: 170px;
+    height: 120px;
+    min-height: 120px;
+    max-height: 120px;
+    display: block;
+    background: none;
+    pointer-events: none;
+} 

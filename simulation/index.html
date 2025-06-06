@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AURORA - Cognitive Procurement Operating System</title>
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Main CSS Files -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/agents.css">
+    <link rel="stylesheet" href="css/workflows.css">
+    <link rel="stylesheet" href="css/settings.css">
+    <link rel="stylesheet" href="css/monitoring.css">
+    <link rel="stylesheet" href="css/analytics.css">
+    
+    <!-- Page Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0idXJsKCNncmFkaWVudDApIi8+CjxwYXRoIGQ9Ik0xNiA4TDIwIDEyTDE2IDE2TDEyIDEyTDE2IDhaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNMTYgMTZMMjAgMjBMMTYgMjRMMTIgMjBMMTYgMTZaIiBmaWxsPSJ3aGl0ZSIvPgo8ZGVmcz4KPGxpbmVhckdyYWRpZW50IGlkPSJncmFkaWVudDAiIHgxPSIwIiB5MT0iMCIgeDI9IjMyIiB5Mj0iMzIiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj4KPHN0b3Agc3RvcC1jb2xvcj0iIzYwQTVGQSIvPgo8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMzQjgyRjYiLz4KPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8L3N2Zz4=">
+</head>
+<body>
+    <div class="command-center">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <div class="aurora-logo">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h1 class="header-title">AURORA</h1>
+            </div>
+            
+            <div class="system-status">
+                <div class="status-indicator">
+                    <div class="status-dot"></div>
+                    <span>All Systems Operational</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Vertical Sidebar Navigation -->
+        <aside class="vertical-nav">
+            <div class="nav-item active" data-view="dashboard">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <span>Dashboard</span>
+            </div>
+            <div class="nav-item" data-view="agents">
+                <i class="nav-icon fas fa-robot"></i>
+                <span>AI Agents</span>
+                <div class="nav-badge">5</div>
+            </div>
+            <div class="nav-item" data-view="workflows">
+                <i class="nav-icon fas fa-sitemap"></i>
+                <span>Workflows</span>
+            </div>
+            <div class="nav-item" data-view="analytics">
+                <i class="nav-icon fas fa-chart-line"></i>
+                <span>Analytics</span>
+            </div>
+            <div class="nav-item" data-view="monitoring">
+                <i class="nav-icon fas fa-heartbeat"></i>
+                <span>Monitoring</span>
+            </div>
+            <div class="nav-item" data-view="settings">
+                <i class="nav-icon fas fa-cog"></i>
+                <span>Settings</span>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Dashboard Page -->
+            <div class="page-container active" id="dashboard-page">
+                <div id="dashboard-content"></div>
+            </div>
+
+            <!-- Agents Page -->
+            <div class="page-container" id="agents-page">
+                <div id="agents-content"></div>
+            </div>
+
+            <!-- Workflows Page -->
+            <div class="page-container" id="workflows-page">
+                <div id="workflows-content"></div>
+            </div>
+
+            <!-- Analytics Page -->
+            <div class="page-container" id="analytics-page">
+                <div id="analytics-content"></div>
+            </div>
+
+            <!-- Monitoring Page -->
+            <div class="page-container" id="monitoring-page">
+                <div id="monitoring-content"></div>
+            </div>
+
+            <!-- Settings Page -->
+            <div class="page-container" id="settings-page">
+                <div id="settings-content"></div>
+            </div>
+        </main>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">
+                    <i class="fas fa-clock" style="color: #60a5fa; margin-right: 0.5rem;"></i>
+                    Recent Activity
+                </h3>
+                <div class="recent-activity">
+                    <div class="activity-item">
+                        <div class="activity-time">2m ago</div>
+                        <div class="activity-desc">APOLLO completed emergency procurement</div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-time">5m ago</div>
+                        <div class="activity-desc">ARIA discovered 12 new suppliers</div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-time">8m ago</div>
+                        <div class="activity-desc">ALEX optimized contract terms</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">
+                    <i class="fas fa-chart-pie" style="color: #60a5fa; margin-right: 0.5rem;"></i>
+                    Quick Stats
+                </h3>
+                <div class="quick-stats">
+                    <div class="quick-stat">
+                        <div class="stat-value">47</div>
+                        <div class="stat-label">Active Workflows</div>
+                    </div>
+                    <div class="quick-stat">
+                        <div class="stat-value">98.7%</div>
+                        <div class="stat-label">System Uptime</div>
+                    </div>
+                    <div class="quick-stat">
+                        <div class="stat-value">1,247</div>
+                        <div class="stat-label">Connected Suppliers</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="js/main.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/agents.js"></script>
+    <script src="js/workflows.js"></script>
+    
+    <!-- Initialize Content Loaders -->
+    <script>
+        // Content loader for modular pages
+        class ContentLoader {
+            static async loadPage(pageName) {
+                try {
+                    const response = await fetch(`pages/${pageName}.html`);
+                    const content = await response.text();
+                    const container = document.getElementById(`${pageName}-content`);
+                    if (container) {
+                        container.innerHTML = content;
+                        if (pageName === 'dashboard' && window.auroraApp && typeof window.auroraApp.loadDashboardContent === 'function') {
+                            window.auroraApp.loadDashboardContent();
+                        }
+                    }
+                } catch (error) {
+                    console.error(`Error loading ${pageName} page:`, error);
+                    // Fallback to inline content
+                    this.loadInlineContent(pageName);
+                }
+            }
+
+            static loadInlineContent(pageName) {
+                // Load content from the original monolithic file as fallback
+                const container = document.getElementById(`${pageName}-content`);
+                if (container) {
+                    container.innerHTML = `<div style="text-align: center; padding: 2rem; color: #94a3b8;">
+                        <i class="fas fa-spinner fa-spin" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+                        <p>Loading ${pageName} content...</p>
+                    </div>`;
+                }
+            }
+
+            static async init() {
+                // Load all pages
+                const pages = ['dashboard', 'agents', 'workflows', 'analytics', 'monitoring', 'settings'];
+                
+                // Load dashboard first
+                await this.loadPage('dashboard');
+                
+                // Load other pages in background
+                pages.slice(1).forEach(page => {
+                    setTimeout(() => this.loadPage(page), 100);
+                });
+            }
+        }
+
+        // Initialize content loading when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => ContentLoader.init());
+        } else {
+            ContentLoader.init();
+        }
+    </script>
+</body>
+</html> 
