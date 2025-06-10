@@ -147,11 +147,15 @@
         </aside>
     </div>
 
+    <!-- Chart.js Library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
     <!-- JavaScript Files -->
     <script src="js/main.js"></script>
     <script src="js/dashboard.js"></script>
     <script src="js/agents.js"></script>
     <script src="js/workflows.js"></script>
+    <script src="js/analytics.js"></script>
     
     <!-- Initialize Content Loaders -->
     <script>
@@ -166,6 +170,9 @@
                         container.innerHTML = content;
                         if (pageName === 'dashboard' && window.auroraApp && typeof window.auroraApp.loadDashboardContent === 'function') {
                             window.auroraApp.loadDashboardContent();
+                        }
+                        if (pageName === 'analytics' && window.analyticsCharts) {
+                            setTimeout(() => window.analyticsCharts.init(), 200);
                         }
                     }
                 } catch (error) {

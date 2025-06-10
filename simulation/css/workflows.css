@@ -294,13 +294,195 @@
 #workflows-page .workflow-card-actions { display: flex; gap: 0.5rem; justify-content: flex-end; }
 #workflows-page .workflow-btn { padding: 0.4rem 0.8rem; background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; border-radius: 4px; cursor: pointer; transition: all 0.3s ease; font-size: 0.8rem; }
 #workflows-page .workflow-btn:hover { background: rgba(59, 130, 246, 0.2); border-color: #60a5fa; }
-#workflows-page .agent-settings { border: 1px solid #374151; border-radius: 6px; padding: 0.8rem; background: rgba(15, 23, 42, 0.3); }
-#workflows-page .setting-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; }
-#workflows-page .setting-row:last-child { margin-bottom: 0; }
-#workflows-page .setting-row label { color: #f1f5f9; font-size: 0.8rem; }
-#workflows-page .confidence-slider { flex: 1; margin: 0 0.5rem; }
-#workflows-page .confidence-value { color: #60a5fa; font-size: 0.8rem; font-weight: 600; min-width: 35px; }
-#workflows-page .timeout-input { width: 60px; padding: 0.3rem; background: rgba(15, 23, 42, 0.8); border: 1px solid #475569; border-radius: 4px; color: #e2e8f0; font-size: 0.8rem; text-align: center; }
+#workflows-page .agent-settings {
+    border: 1px solid #374151;
+    border-radius: 6px;
+    padding: 1rem;
+    background: rgba(15, 23, 42, 0.3);
+    margin-top: 0.5rem;
+}
+#workflows-page .setting-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+#workflows-page .setting-row:last-child {
+    margin-bottom: 0;
+}
+#workflows-page .setting-row label {
+    color: #f1f5f9;
+    font-size: 0.85rem;
+    font-weight: 500;
+    min-width: 120px;
+}
+#workflows-page .confidence-slider {
+    flex: 1;
+    margin: 0 0.8rem;
+    height: 4px;
+    background: rgba(71, 85, 105, 0.5);
+    border-radius: 2px;
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+}
+#workflows-page .confidence-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #60a5fa;
+    cursor: pointer;
+    border: 2px solid #1e293b;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+#workflows-page .confidence-slider::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #60a5fa;
+    cursor: pointer;
+    border: 2px solid #1e293b;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+#workflows-page .confidence-value {
+    color: #60a5fa;
+    font-size: 0.85rem;
+    font-weight: 600;
+    min-width: 40px;
+    text-align: right;
+}
+#workflows-page .timeout-input {
+    width: 70px;
+    padding: 0.4rem;
+    background: rgba(30, 58, 95, 0.3);
+    border: 1px solid #475569;
+    border-radius: 4px;
+    color: #f1f5f9;
+    font-size: 0.85rem;
+    text-align: center;
+    transition: all 0.2s ease;
+}
+#workflows-page .timeout-input:focus {
+    outline: none;
+    border-color: #60a5fa;
+    box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.1);
+}
+
+/* Node Properties Form Styles */
+#workflows-page .property-group {
+    margin-bottom: 1.5rem;
+}
+
+#workflows-page .property-label {
+    display: block;
+    color: #f1f5f9;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.025em;
+}
+
+#workflows-page .property-input {
+    width: 100%;
+    padding: 0.6rem;
+    background: rgba(30, 58, 95, 0.3);
+    border: 1px solid #475569;
+    border-radius: 6px;
+    color: #f1f5f9;
+    font-size: 0.9rem;
+    resize: vertical;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+#workflows-page .property-input:focus {
+    outline: none;
+    border-color: #60a5fa;
+    box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
+    background: rgba(30, 58, 95, 0.4);
+}
+
+#workflows-page .property-input::placeholder {
+    color: #64748b;
+}
+
+/* Condition Builder Styles */
+#workflows-page .condition-builder {
+    border: 1px solid #374151;
+    border-radius: 6px;
+    padding: 1rem;
+    background: rgba(15, 23, 42, 0.3);
+    margin-top: 0.5rem;
+}
+
+#workflows-page .condition-row {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 0.5rem;
+    margin-bottom: 0.8rem;
+    align-items: center;
+}
+
+#workflows-page .condition-row:last-of-type {
+    margin-bottom: 1rem;
+}
+
+#workflows-page .condition-field,
+#workflows-page .condition-operator {
+    padding: 0.5rem;
+    background: rgba(30, 58, 95, 0.3);
+    border: 1px solid #475569;
+    border-radius: 4px;
+    color: #f1f5f9;
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
+}
+
+#workflows-page .condition-field:focus,
+#workflows-page .condition-operator:focus {
+    outline: none;
+    border-color: #60a5fa;
+    box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.1);
+}
+
+#workflows-page .condition-value {
+    padding: 0.5rem;
+    background: rgba(30, 58, 95, 0.3);
+    border: 1px solid #475569;
+    border-radius: 4px;
+    color: #f1f5f9;
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
+}
+
+#workflows-page .condition-value:focus {
+    outline: none;
+    border-color: #60a5fa;
+    box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.1);
+}
+
+#workflows-page .add-condition-btn {
+    padding: 0.5rem 1rem;
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    color: #60a5fa;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+#workflows-page .add-condition-btn:hover {
+    background: rgba(59, 130, 246, 0.2);
+    border-color: #60a5fa;
+    transform: translateY(-1px);
+}
 
 @media (max-width: 1200px) {
     #workflows-page .workflow-builder-workspace {
@@ -356,5 +538,32 @@
     }
     #workflows-page .workflow-canvas {
         min-width: 0;
+    }
+    
+    /* Mobile adjustments for Node Properties */
+    #workflows-page .condition-row {
+        grid-template-columns: 1fr;
+        gap: 0.4rem;
+    }
+    
+    #workflows-page .property-input {
+        padding: 0.5rem;
+        font-size: 0.85rem;
+    }
+    
+    #workflows-page .setting-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    #workflows-page .setting-row label {
+        min-width: auto;
+        margin-bottom: 0.3rem;
+    }
+    
+    #workflows-page .confidence-slider {
+        width: 100%;
+        margin: 0;
     }
 } 
